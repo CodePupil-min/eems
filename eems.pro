@@ -1,5 +1,5 @@
 QT       += core gui
-
+QT+=sql
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
@@ -16,26 +16,34 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    database.cpp \
+    dialog_login.cpp \
     main.cpp \
     mainwindow.cpp \
     page_data.cpp \
     page_dev.cpp \
     page_env.cpp \
-    page_net.cpp
+    page_net.cpp \
+    page_super.cpp
 
 HEADERS += \
+    database.h \
+    dialog_login.h \
     mainwindow.h \
     page_data.h \
     page_dev.h \
     page_env.h \
-    page_net.h
+    page_net.h \
+    page_super.h
 
 FORMS += \
+    dialog_login.ui \
     mainwindow.ui \
     page_data.ui \
     page_dev.ui \
     page_env.ui \
-    page_net.ui
+    page_net.ui \
+    page_super.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

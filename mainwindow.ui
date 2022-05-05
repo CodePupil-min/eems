@@ -56,6 +56,9 @@ border-style:none;
 QPushButton:hover{
 font:10pt;
 }
+QPushButton:pressed{
+color:yellow;
+}
 </string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -119,9 +122,16 @@ font:10pt;
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="menu_exit">
+        <widget class="QPushButton" name="user">
          <property name="text">
           <string>5</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="menu_exit">
+         <property name="text">
+          <string>6</string>
          </property>
         </widget>
        </item>
