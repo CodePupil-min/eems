@@ -16,6 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    confirm.cpp \
     database.cpp \
     dialog_login.cpp \
     main.cpp \
@@ -24,9 +25,11 @@ SOURCES += \
     page_dev.cpp \
     page_env.cpp \
     page_net.cpp \
-    page_super.cpp
+    page_super.cpp \
+    tool.cpp
 
 HEADERS += \
+    confirm.h \
     database.h \
     dialog_login.h \
     mainwindow.h \
@@ -34,9 +37,11 @@ HEADERS += \
     page_dev.h \
     page_env.h \
     page_net.h \
-    page_super.h
+    page_super.h \
+    tool.h
 
 FORMS += \
+    confirm.ui \
     dialog_login.ui \
     mainwindow.ui \
     page_data.ui \

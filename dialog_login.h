@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include"database.h"
+#include "tool.h"
+
 namespace Ui {
 class dialog_login;
 }

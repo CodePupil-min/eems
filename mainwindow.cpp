@@ -7,10 +7,6 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    /*设置图标字体*/
-    int fontId = QFontDatabase::addApplicationFont(":/font/fa-solid-900.ttf"); //加入字体，并获取字体ID
-    QString fontName = QFontDatabase::applicationFontFamilies(fontId).at(0); //获取字体名称
-    iconFont = QFont(fontName);
     setMenuButton();
     /*次级页面*/
     p_env=new page_env(this);
@@ -58,16 +54,21 @@ void MainWindow::manageUsers(){
     ui->mainPage->setCurrentWidget(this->p_super);
 }
 void MainWindow::login(){
-    d_login->show();
+    d_login->exec();
 }
 
 void MainWindow::pressExit(){
+    if(isLogin){
+        confirm *c=new confirm(this);        
+        if(!c->reveal("退出登录")){delete c;return;}
+    }
     isLogin=false;
     isSuper=false;
     ui->mainPage->setCurrentWidget(this->p_env);
     updateUserStatus();
 }
 void MainWindow::setMenuButton(){
+    QFont iconFont=(new Tool())->getIconFont();
     ui->menu_env->setFont(iconFont); //设置字体
     ui->menu_env->installEventFilter(this);
     ui->menu_env->setText(_icon_env);

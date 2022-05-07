@@ -2,22 +2,14 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QFontDatabase>
 #include "page_env.h"
 #include "page_dev.h"
 #include "page_data.h"
 #include "page_net.h"
 #include "page_super.h"
 #include "dialog_login.h"
-
-#define _icon_env QChar(0xf06c)
-#define _icon_dev QChar(0xf0e8)
-#define _icon_data QChar(0xf1c0)
-#define _icon_net QChar(0xf1eb)
-#define _icon_exit QChar(0xf2f5)
-#define _icon_user QChar(0xf007)
-#define _icon_super QChar(0xf4fe)
-#define _icon_not_login QChar(0xf2bd)
+#include "confirm.h"
+#include "tool.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -52,12 +44,10 @@ private:
     page_net* p_net;
     page_super* p_super;
     dialog_login* d_login;
-    //图标
-    QFont iconFont;
     //登录状态
-    bool isLogin=false;
-    bool isSuper=false;
-    QString username="xxx";
+    bool isLogin=1;
+    bool isSuper=1;
+    QString username="";
 
 };
 #endif // MAINWINDOW_H
