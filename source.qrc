@@ -2,4 +2,7 @@
     <qresource prefix="/font">
         <file>fa-solid-900.ttf</file>
     </qresource>
+    <qresource prefix="/image">
+        <file>xiaohui.jpg</file>
+    </qresource>
 </RCC>

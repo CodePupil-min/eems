@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>280</height>
+    <height>300</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -21,8 +21,8 @@
   </property>
   <property name="styleSheet">
    <string notr="true">#dialog_login{
-border:1px solid #274597;
-border-radius:10px;
+border:1px solid #28BFA0;
+background-color:#E2E3E7;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -39,15 +39,15 @@ border-radius:10px;
     <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>9</number>
    </property>
    <item>
     <widget class="QWidget" name="widget_3" native="true">
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(39, 68, 150);
+      <string notr="true">background-color:#28BFA0;
 color:white;
-border:1px solid #274597;
-border-radius:10px;</string>
+border:1px solid #28BFA0;
+</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
@@ -150,6 +150,31 @@ font:12pt;</string>
    </item>
    <item>
     <widget class="QWidget" name="widget_4" native="true">
+     <property name="styleSheet">
+      <string notr="true">QPushButton{
+border:none;
+border-radius:10px;
+color:white;
+}
+#login{
+background-color:#28BFA0;
+}
+#login:hover{
+background-color:#14CDAB
+}
+#login:pressed{
+background:#108D76
+}
+#cancel{
+background-color: #FE935B
+}
+#cancel:hover{
+	background-color: rgb(255, 173, 130);
+}
+#cancel:pressed{
+	background-color: rgb(222, 106, 45);
+}</string>
+     </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <property name="leftMargin">
        <number>0</number>
@@ -165,6 +190,18 @@ font:12pt;</string>
       </property>
       <item row="2" column="1">
        <widget class="QPushButton" name="login">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>40</height>
+         </size>
+        </property>
         <property name="text">
          <string>登录</string>
         </property>
@@ -172,6 +209,18 @@ font:12pt;</string>
       </item>
       <item row="2" column="2">
        <widget class="QPushButton" name="cancel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>40</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>

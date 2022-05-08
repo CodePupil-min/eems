@@ -9,6 +9,7 @@
 #define _icon_exit QChar(0xf2f5)//sign-out-alt
 #define _icon_user QChar(0xf007)//user
 #define _icon_super QChar(0xf4fe)//user-cog
+#define _icon_user_plus QChar(0xf234)//user_plus
 #define _icon_not_login QChar(0xf2bd)//user-circle
 #define _icon_lock QChar(0xf023)//lock
 #define _icon_key QChar(0xf084)//key
@@ -16,6 +17,8 @@
 #define _icon_check QChar(0xf14a)//check_square
 #define _icon_eye QChar(0xf06e)//check_eye
 #define _icon_eye_slash QChar(0xf070)//check_eye_slash
+#define _icon_trash QChar(0xf2ed)//trash-alt
+#define _icon_fault QChar(0xf410)//window_close
 
 class Tool
 {

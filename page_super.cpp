@@ -8,7 +8,6 @@ page_super::page_super(QWidget *parent) :
     ui->setupUi(this);
     //加载记录
     db=new database();
-    loadData();
     updateRecord();
     //隐藏添加用户界面
     ui->addwidget->hide();
@@ -17,7 +16,7 @@ page_super::page_super(QWidget *parent) :
     connect(ui->sureadd,&QPushButton::clicked,this,&page_super::addRecord);
     connect(ui->canceladd,&QPushButton::clicked,this,&page_super::pressCanceladd);
     connect(ui->rmuserbtn,&QPushButton::clicked,this,&page_super::rmRecord);
-    //一些初始的ui设计
+    //一些初始的ui
     QFont iconFont=(new Tool())->getIconFont();
     ui->pwdvisbtn->setFont(iconFont);
     ui->pwdvisbtn->setText(pwdisvisable?_icon_eye_slash:_icon_eye);
@@ -29,10 +28,8 @@ page_super::~page_super()
 {
     delete ui;
 }
-void page_super::loadData(){
-    data=db->selectAllUsers();
-}
 void page_super::updateRecord(){
+    data=db->selectAllUsers();
     content=new QStandardItemModel();
     //添加表头
     content->setColumnCount(3);
@@ -48,8 +45,9 @@ void page_super::updateRecord(){
     ui->usertable->verticalHeader()->hide();    //隐藏默认显示的行头
     for(int i=0;i<data.size();i++){
         QStandardItem *item0 = new QStandardItem(tr("%1").arg(i+1));
-        QStandardItem *item1 = new QStandardItem(data.at(i)[0]);
-        QString pwdstr=pwdisvisable?data.at(i)[1]:"******";//是否显示密码
+        QString n=data.at(i)[0];
+        QStandardItem *item1 = new QStandardItem(n=="root"?n+"(管理员)":n);
+        QString pwdstr=pwdisvisable?data.at(i)[1]:"*********";//是否显示密码
         QStandardItem *item2 = new QStandardItem(pwdstr);
         content->setItem(i,0,item0);                                //表格第i行，第1列添加一项内容
         content->setItem(i,1,item1);                                //表格第i行，第2列添加一项内容
@@ -82,35 +80,38 @@ void page_super::addRecord(){
         return;
     }
     if(db->isUserExist(user)){
-        if(db->isSuperUser())return;//管理员直接退出
         confirm *c=new confirm(this);
-        if(!c->reveal("用户\""+user+"\"已存在，是否修改密码",_icon_warn)){delete c;return;}//取消
+        if(!c->reveal("用户“"+user+"”已存在，是否修改密码",_icon_warn)){delete c;return;}//取消
         db->alterPwd(user,pwd);//确认修改
     }else{
         confirm *c=new confirm(this);
-        if(!c->reveal("添加新用户\""+user+"\"")){delete c;return;}//取消
+        if(!c->reveal("添加新用户“"+user+"”",_icon_user_plus)){delete c;return;}//取消
         db->addUser(user,pwd);//确认添加
     }
     confirm *c=new confirm(this);
     if(!c->reveal("操作成功",_icon_check,true)){delete c;return;}//取消
-    loadData();
     updateRecord();
     pressCanceladd();
 }
 void page_super::rmRecord(){
     int row = ui->usertable->selectionModel()->currentIndex().row();//获取选中行行号
-    ui->usertable->selectionModel()->clear();//清除选中效果
+    ui->usertable->selectionModel()->clear();//清除选中的效果
+    if(row==0){
+        confirm *c=new confirm(this);
+        c->reveal("不能删除管理员",_icon_fault,true);
+        delete c;
+        return;
+    }//第一行管理员不能删
     if(row==-1){//并未选择任何行
         confirm *c=new confirm(this);
-        c->reveal("删除前先选中要删除的用户",1,true);
+        c->reveal("请选中要删除的用户",_icon_fault,true);
         delete c;
         return;
     }
     QString user = content->item(row,1)->text();//获取选中的用户名
     confirm *c=new confirm(this);
-    if(!c->reveal("删除用户\""+user+"\"",_icon_warn)){delete c;return;}
+    if(!c->reveal("删除用户“"+user+"”",_icon_trash)){delete c;return;}
     db->removeUser(user);
-    loadData();
     updateRecord();
 }
 void page_super::pressCanceladd(){
@@ -125,6 +126,5 @@ void page_super::pressAdduser(){
 void page_super::pressPwdvis(){
     pwdisvisable=!pwdisvisable;
     ui->pwdvisbtn->setText(pwdisvisable?_icon_eye_slash:_icon_eye);
-    loadData();
     updateRecord();
 }

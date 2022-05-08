@@ -18,8 +18,7 @@ class page_super : public QWidget
 public:
     explicit page_super(QWidget *parent = nullptr);
     ~page_super();
-    void loadData();//加载数据库数据
-    void updateRecord();//用加载的数据更新记录
+    void updateRecord();//加载数据更新记录
     void addRecord();//添加用户
     void rmRecord();//删除用户
     void pressPwdvis();

@@ -14,6 +14,7 @@ class page_dev : public QWidget
 public:
     explicit page_dev(QWidget *parent = nullptr);
     ~page_dev();
+    void setTitle(bool isLogin=false);
 
 private:
     Ui::page_dev *ui;

@@ -12,3 +12,7 @@ page_dev::~page_dev()
 {
     delete ui;
 }
+void page_dev::setTitle(bool isLogin){
+    QString title=isLogin?"设备控制":"设备控制(登录后可用)";
+    ui->title->setText(title);
+}

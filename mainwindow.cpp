@@ -42,6 +42,7 @@ void MainWindow::chooseEnvP(){
     ui->mainPage->setCurrentWidget(this->p_env);
 }
 void MainWindow::chooseDevP(){
+    p_dev->setTitle(isLogin);
     ui->mainPage->setCurrentWidget(this->p_dev);
 }
 void MainWindow::chooseDataP(){
@@ -60,7 +61,7 @@ void MainWindow::login(){
 void MainWindow::pressExit(){
     if(isLogin){
         confirm *c=new confirm(this);        
-        if(!c->reveal("退出登录")){delete c;return;}
+        if(!c->reveal("退出登录",_icon_exit)){delete c;return;}
     }
     isLogin=false;
     isSuper=false;
