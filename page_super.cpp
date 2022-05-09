@@ -20,7 +20,8 @@ page_super::page_super(QWidget *parent) :
     QFont iconFont=(new Tool())->getIconFont();
     ui->pwdvisbtn->setFont(iconFont);
     ui->pwdvisbtn->setText(pwdisvisable?_icon_eye_slash:_icon_eye);
-    //
+    ui->logo->setFont(iconFont);
+    ui->logo->setText(_icon_users);
 
 }
 

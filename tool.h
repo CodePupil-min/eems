@@ -19,6 +19,7 @@
 #define _icon_eye_slash QChar(0xf070)//check_eye_slash
 #define _icon_trash QChar(0xf2ed)//trash-alt
 #define _icon_fault QChar(0xf410)//window_close
+#define _icon_users QChar(0xf500)//user-friends
 
 class Tool
 {

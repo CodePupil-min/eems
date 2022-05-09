@@ -135,15 +135,21 @@ background:#108D76
       <item>
        <widget class="QPushButton" name="sureadd">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
         <property name="maximumSize">
          <size>
           <width>50</width>
-          <height>16777215</height>
+          <height>40</height>
          </size>
         </property>
         <property name="text">
@@ -153,11 +159,34 @@ background:#108D76
       </item>
       <item>
        <widget class="QPushButton" name="canceladd">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
         <property name="maximumSize">
          <size>
           <width>50</width>
-          <height>16777215</height>
+          <height>40</height>
          </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">#canceladd{
+background-color: #FE935B
+}
+#canceladd:hover{
+	background-color: rgb(255, 173, 130);
+}
+#canceladd:pressed{
+	background-color: rgb(222, 106, 45);
+}</string>
         </property>
         <property name="text">
          <string>取消</string>
@@ -175,16 +204,32 @@ background:#108D76
        <height>50</height>
       </size>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QLabel" name="logo">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font:13pt;</string>
+        </property>
+        <property name="text">
+         <string>logo</string>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QLabel" name="title">
         <property name="styleSheet">
-         <string notr="true">color: #FE935B;
-font: 15pt;
+         <string notr="true">font: 75 16pt &quot;黑体&quot;;
+
 </string>
         </property>
         <property name="text">
-         <string>用户管理(仅管理员可见)</string>
+         <string>用户管理(仅管理员可编辑)</string>
         </property>
        </widget>
       </item>
@@ -215,51 +260,90 @@ font: 15pt;
    </item>
    <item row="3" column="0">
     <widget class="QWidget" name="widget" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
        <width>0</width>
        <height>60</height>
       </size>
      </property>
-     <widget class="QPushButton" name="adduserbtn">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>20</y>
-        <width>93</width>
-        <height>28</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>添加用户</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="rmuserbtn">
-      <property name="geometry">
-       <rect>
-        <x>200</x>
-        <y>20</y>
-        <width>93</width>
-        <height>28</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>删除用户</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pwdvisbtn">
-      <property name="geometry">
-       <rect>
-        <x>730</x>
-        <y>20</y>
-        <width>93</width>
-        <height>28</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>密码</string>
-      </property>
-     </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QPushButton" name="adduserbtn">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>80</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>添加用户</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="rmuserbtn">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>80</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>删除用户</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pwdvisbtn">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>40</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>密码</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>
