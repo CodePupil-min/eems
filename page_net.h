@@ -2,6 +2,7 @@
 #define PAGE_NET_H
 
 #include <QWidget>
+#include "tool.h"
 
 namespace Ui {
 class page_net;
@@ -17,6 +18,7 @@ public:
 
 private:
     Ui::page_net *ui;
+    QFont iconFont;
 };
 
 #endif // PAGE_NET_H

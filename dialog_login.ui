@@ -22,7 +22,7 @@
   <property name="styleSheet">
    <string notr="true">#dialog_login{
 border:1px solid #28BFA0;
-background-color:#E2E3E7;
+background-color:#D2DFEF;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -44,9 +44,8 @@ background-color:#E2E3E7;
    <item>
     <widget class="QWidget" name="widget_3" native="true">
      <property name="styleSheet">
-      <string notr="true">background-color:#28BFA0;
+      <string notr="true">background-color:#155CA6;
 color:white;
-border:1px solid #28BFA0;
 </string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -157,13 +156,13 @@ border-radius:10px;
 color:white;
 }
 #login{
-background-color:#28BFA0;
+background-color:#409EFF
 }
 #login:hover{
-background-color:#14CDAB
+background-color:#70B6FF
 }
 #login:pressed{
-background:#108D76
+background:#155CA6
 }
 #cancel{
 background-color: #FE935B

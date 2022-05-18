@@ -52,12 +52,27 @@
        <height>50</height>
       </size>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="logo">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font:15pt;</string>
+        </property>
+        <property name="text">
+         <string>logo</string>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QLabel" name="title">
         <property name="styleSheet">
-         <string notr="true">color: #FE935B;
-font: 15pt;
+         <string notr="true">font: 75 16pt &quot;微软雅黑&quot;;
 </string>
         </property>
         <property name="text">

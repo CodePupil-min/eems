@@ -17,14 +17,14 @@
    <string notr="true">QPushButton{
 border:none;
 border-radius:10px;
-background-color:#28BFA0;
+background-color:#409EFF;
 color:white;
 }
 QPushButton:hover{
-background-color:#14CDAB
+background-color:#70B6FF
 }
 QPushButton:pressed{
-background:#108D76
+background:#155CA6
 }
 </string>
   </property>
@@ -214,7 +214,7 @@ background-color: #FE935B
          </sizepolicy>
         </property>
         <property name="styleSheet">
-         <string notr="true">font:13pt;</string>
+         <string notr="true">font:15pt;</string>
         </property>
         <property name="text">
          <string>logo</string>
@@ -224,7 +224,7 @@ background-color: #FE935B
       <item>
        <widget class="QLabel" name="title">
         <property name="styleSheet">
-         <string notr="true">font: 75 16pt &quot;黑体&quot;;
+         <string notr="true">font: 75 16pt &quot;微软雅黑&quot;;
 
 </string>
         </property>

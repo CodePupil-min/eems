@@ -6,6 +6,12 @@ page_super::page_super(QWidget *parent) :
     ui(new Ui::page_super)
 {
     ui->setupUi(this);
+    //一些初始的ui
+    QFont iconFont=(new Tool())->getIconFont();
+    ui->pwdvisbtn->setFont(iconFont);
+    ui->pwdvisbtn->setText(pwdisvisable?_icon_eye_slash:_icon_eye);
+    ui->logo->setFont(iconFont);
+    ui->logo->setText(_icon_users);
     //加载记录
     db=new database();
     updateRecord();
@@ -16,13 +22,6 @@ page_super::page_super(QWidget *parent) :
     connect(ui->sureadd,&QPushButton::clicked,this,&page_super::addRecord);
     connect(ui->canceladd,&QPushButton::clicked,this,&page_super::pressCanceladd);
     connect(ui->rmuserbtn,&QPushButton::clicked,this,&page_super::rmRecord);
-    //一些初始的ui
-    QFont iconFont=(new Tool())->getIconFont();
-    ui->pwdvisbtn->setFont(iconFont);
-    ui->pwdvisbtn->setText(pwdisvisable?_icon_eye_slash:_icon_eye);
-    ui->logo->setFont(iconFont);
-    ui->logo->setText(_icon_users);
-
 }
 
 page_super::~page_super()

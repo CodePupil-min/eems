@@ -3,6 +3,6 @@
         <file>fa-solid-900.ttf</file>
     </qresource>
     <qresource prefix="/image">
-        <file>xiaohui.jpg</file>
+        <file>data/cloudy.png</file>
     </qresource>
 </RCC>

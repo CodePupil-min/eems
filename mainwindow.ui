@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
-    <height>700</height>
+    <width>1200</width>
+    <height>900</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>1000</width>
-    <height>700</height>
+    <width>1200</width>
+    <height>900</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -24,16 +24,14 @@
   </property>
   <widget class="QWidget" name="total">
    <property name="styleSheet">
-    <string notr="true">
-
-#menu{
-background-color:#28BFA0
+    <string notr="true">#menu{
+background-color:#375DA5
 }
 #right{
-background:#e2e3e7
+background:#D2DFEF
 }
-#main,#mainPage&gt;QWidget,QTableView{
-background: #FFFFFE
+#main,#mainPage&gt;QWidget{
+background: #EDF2F8
 }
 
 
@@ -87,16 +85,16 @@ background: #FFFFFE
        <string notr="true">QPushButton{
 border:none;
 border-radius:10px;
-background-color:#28BFA0;
+background-color:#375DA5;
 color:white;
 font: 15pt;
 }
 QPushButton:hover{
 font:10pt;
-background-color:#14CDAB
+background-color:#698ED2
 }
 QPushButton:pressed{
-background:#108D76
+background:#12316B
 }
 </string>
       </property>

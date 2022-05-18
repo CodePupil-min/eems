@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/image">
+        <file>cloudy.png</file>
+        <file>sunny.png</file>
+        <file>xiaohui.jpg</file>
+        <file>rain.png</file>
+        <file>overcast.png</file>
+        <file>other.png</file>
+    </qresource>
+    <qresource prefix="/font">
+        <file>fa-solid-900.ttf</file>
+    </qresource>
+</RCC>

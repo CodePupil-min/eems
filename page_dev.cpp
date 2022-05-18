@@ -6,6 +6,10 @@ page_dev::page_dev(QWidget *parent) :
     ui(new Ui::page_dev)
 {
     ui->setupUi(this);
+    //一些初始的ui
+    iconFont=(new Tool())->getIconFont();
+    ui->logo->setFont(iconFont);
+    ui->logo->setText(_icon_dev);
 }
 
 page_dev::~page_dev()

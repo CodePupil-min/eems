@@ -2,6 +2,7 @@
 #define PAGE_DEV_H
 
 #include <QWidget>
+#include "tool.h"
 
 namespace Ui {
 class page_dev;
@@ -18,6 +19,7 @@ public:
 
 private:
     Ui::page_dev *ui;
+    QFont iconFont;
 };
 
 #endif // PAGE_DEV_H

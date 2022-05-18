@@ -21,7 +21,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">#confirm{
-	background-color: rgb(255, 255, 255);
+	background-color: #D2DFEF
 }
 
 </string>
@@ -42,10 +42,7 @@
    <item>
     <widget class="QWidget" name="wid" native="true">
      <property name="styleSheet">
-      <string notr="true">#wid
-{
-border:1px solid #28BFA0;
-}</string>
+      <string notr="true"/>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
@@ -116,13 +113,13 @@ border-radius:10px;
 color:white;
 }
 #ok{
-background-color:#28BFA0;
+background-color:#409EFF
 }
 #ok:hover{
-background-color:#14CDAB
+background-color:#70B6FF
 }
 #ok:pressed{
-background:#108D76
+background:#155CA6
 }
 #nok{
 background-color: #FE935B

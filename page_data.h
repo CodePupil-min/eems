@@ -2,6 +2,7 @@
 #define PAGE_DATA_H
 
 #include <QWidget>
+#include "tool.h"
 
 namespace Ui {
 class page_data;
@@ -17,6 +18,7 @@ public:
 
 private:
     Ui::page_data *ui;
+    QFont iconFont;
 };
 
 #endif // PAGE_DATA_H

@@ -56,6 +56,7 @@ void MainWindow::manageUsers(){
 }
 void MainWindow::login(){
     d_login->exec();
+    ui->mainPage->setCurrentWidget(this->p_env);
 }
 
 void MainWindow::pressExit(){
