@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1076</width>
-    <height>585</height>
+    <height>897</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -92,12 +92,69 @@
      <property name="styleSheet">
       <string notr="true">#widget&gt;QWidget{
 	border-radius:25px;
-	background-color: rgb(0, 170, 255);
+	background-color: rgba(126, 171, 255,150);
 }</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="2" column="2">
-       <widget class="QWidget" name="widget_17" native="true"/>
+       <widget class="QWidget" name="widget_17" native="true">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_5">
+         <item row="1" column="0" rowspan="2">
+          <widget class="QLabel" name="icon_s_tem">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">font:bold 40pt;</string>
+           </property>
+           <property name="text">
+            <string>-</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLabel" name="s_tem">
+           <property name="maximumSize">
+            <size>
+             <width>180</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">font:13pt &quot;微软雅黑&quot;;</string>
+           </property>
+           <property name="text">
+            <string>--℃</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLabel" name="label_3">
+           <property name="styleSheet">
+            <string notr="true">font:18pt &quot;微软雅黑&quot;;</string>
+           </property>
+           <property name="text">
+            <string>温度</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
       </item>
       <item row="4" column="3">
        <widget class="QWidget" name="widget_10" native="true"/>
@@ -106,7 +163,14 @@
        <widget class="QWidget" name="widget_18" native="true"/>
       </item>
       <item row="4" column="2">
-       <widget class="QWidget" name="widget_5" native="true"/>
+       <widget class="QWidget" name="widget_5" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
       </item>
       <item row="0" column="0" rowspan="2" colspan="2">
        <widget class="QWidget" name="img" native="true">
@@ -145,7 +209,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">#weather{
-background-color: rgba(0, 170, 255,100);
+	background-color: rgba(126, 171, 255,150);
 border-radius:25px;
 }
 QLabel{
@@ -169,45 +233,6 @@ color:white;
             <property name="spacing">
              <number>6</number>
             </property>
-            <item row="2" column="2" rowspan="3" colspan="4">
-             <widget class="QLabel" name="type_icon">
-              <property name="styleSheet">
-               <string notr="true">font:bold 80pt;</string>
-              </property>
-              <property name="text">
-               <string>图</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0" rowspan="3">
-             <widget class="QLabel" name="sys_time">
-              <property name="styleSheet">
-               <string notr="true">font:bold 50pt &quot;微软雅黑&quot;;</string>
-              </property>
-              <property name="text">
-               <string>11:11</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="5" column="0">
-             <widget class="QLabel" name="sys_week">
-              <property name="styleSheet">
-               <string notr="true">font:20pt &quot;微软雅黑&quot;;</string>
-              </property>
-              <property name="text">
-               <string>星期一</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
-              </property>
-             </widget>
-            </item>
             <item row="0" column="2" colspan="4">
              <widget class="QLabel" name="notice">
               <property name="text">
@@ -218,13 +243,52 @@ color:white;
               </property>
              </widget>
             </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="local">
+            <item row="5" column="5">
+             <widget class="QLabel" name="type">
+              <property name="styleSheet">
+               <string notr="true">font:15pt &quot;微软雅黑&quot;;</string>
+              </property>
               <property name="text">
-               <string>户外环境：北京市</string>
+               <string>--</string>
               </property>
               <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="2" colspan="2">
+             <widget class="QLabel" name="quality">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">font:bold 15pt;
+border:1px solid white;
+border-radius:5px;</string>
+              </property>
+              <property name="text">
+               <string>-</string>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="5">
+             <widget class="QLabel" name="tem_hl">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">border:1px solid white;
+border-radius:5px;</string>
+              </property>
+              <property name="text">
+               <string>H:--℃
+L:--℃</string>
               </property>
              </widget>
             </item>
@@ -247,18 +311,30 @@ color:white;
               </property>
              </widget>
             </item>
-            <item row="3" column="1">
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+            <item row="2" column="2" rowspan="3" colspan="4">
+             <widget class="QLabel" name="type_icon">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
               </property>
-              <property name="sizeHint" stdset="0">
+              <property name="minimumSize">
                <size>
-                <width>40</width>
-                <height>20</height>
+                <width>0</width>
+                <height>0</height>
                </size>
               </property>
-             </spacer>
+              <property name="styleSheet">
+               <string notr="true">font:bold 80pt;</string>
+              </property>
+              <property name="text">
+               <string>-</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
             </item>
             <item row="5" column="2" colspan="3">
              <widget class="QLabel" name="tem">
@@ -272,7 +348,7 @@ color:white;
                <string notr="true">font:bold 25pt &quot;微软雅黑&quot;;</string>
               </property>
               <property name="text">
-               <string>30℃</string>
+               <string>--℃</string>
               </property>
               <property name="textFormat">
                <enum>Qt::AutoText</enum>
@@ -285,34 +361,39 @@ color:white;
               </property>
              </widget>
             </item>
-            <item row="5" column="5">
-             <widget class="QLabel" name="type">
-              <property name="styleSheet">
-               <string notr="true">font:15pt &quot;微软雅黑&quot;;</string>
-              </property>
+            <item row="0" column="0">
+             <widget class="QLabel" name="local">
               <property name="text">
-               <string>天气</string>
+               <string>户外环境：北京市</string>
               </property>
               <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
               </property>
              </widget>
             </item>
-            <item row="7" column="5">
-             <widget class="QLabel" name="tem_hl">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
+            <item row="5" column="0">
+             <widget class="QLabel" name="sys_week">
               <property name="styleSheet">
-               <string notr="true">border:1px solid white;
-border-radius:5px;</string>
+               <string notr="true">font:20pt &quot;微软雅黑&quot;;</string>
               </property>
               <property name="text">
-               <string>H:20℃
-L:10℃</string>
+               <string>星期一</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0" rowspan="3">
+             <widget class="QLabel" name="sys_time">
+              <property name="styleSheet">
+               <string notr="true">font:bold 50pt &quot;微软雅黑&quot;;</string>
+              </property>
+              <property name="text">
+               <string>--:--</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignBottom|Qt::AlignHCenter</set>
               </property>
              </widget>
             </item>
@@ -329,28 +410,23 @@ L:10℃</string>
 border-radius:5px;</string>
               </property>
               <property name="text">
-               <string>pm2.5:30
-pm 10:40</string>
+               <string>pm2.5:--
+pm 10:--</string>
               </property>
              </widget>
             </item>
-            <item row="7" column="3">
-             <widget class="QLabel" name="quality">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+            <item row="3" column="1">
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
               </property>
-              <property name="styleSheet">
-               <string notr="true">font:bold 15pt;
-border:1px solid white;
-border-radius:5px;</string>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
               </property>
-              <property name="text">
-               <string>良</string>
-              </property>
-             </widget>
+             </spacer>
             </item>
            </layout>
           </widget>
@@ -367,14 +443,14 @@ border-radius:5px;</string>
       <item row="2" column="0" rowspan="3" colspan="2">
        <widget class="QWidget" name="widget_7" native="true">
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(0, 255, 255);</string>
+         <string notr="true"/>
         </property>
        </widget>
       </item>
       <item row="0" column="2" rowspan="2" colspan="2">
        <widget class="QWidget" name="widget_6" native="true">
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(0, 255, 255);</string>
+         <string notr="true"/>
         </property>
        </widget>
       </item>

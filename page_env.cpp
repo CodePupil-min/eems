@@ -10,6 +10,9 @@ page_env::page_env(QWidget *parent) :
     iconFont=(new Tool())->getIconFont();
     ui->logo->setFont(iconFont);
     ui->logo->setText(_icon_env);
+    ui->icon_s_tem->setFont(iconFont);
+    ui->icon_s_tem->setText(_icon_tem);
+
     weathermap=new QMap<QString,QString>();
     //更新系统时间
     updateTime();
@@ -49,10 +52,11 @@ void page_env::getWeatherInfo(QNetworkReply*){
         qDebug()<<"字符串错误";
         return;
     }
+    //获取内容
     QJsonObject info_json = jsonDocument.object();
     QJsonObject data=info_json.value("data").toObject();//数据
     QJsonObject today_weather=data.value("forecast")[0].toObject();//当日天气
-    //获取内容
+    //封装
     weathermap->insert("updatetime",info_json.value("time").toString().replace(0,11,""));//更新时间
     weathermap->insert("pm10",QString::number(data.value("pm10").toInt()));//pm10
     weathermap->insert("pm25",QString::number(data.value("pm25").toInt()));//pm2.5
@@ -64,9 +68,7 @@ void page_env::getWeatherInfo(QNetworkReply*){
     weathermap->insert("tem_l",today_weather.value("low").toString().replace("低温 ",""));//最低温
     weathermap->insert("notice",today_weather.value("notice").toString());//建议
 //    for(auto it = weathermap->begin();it!=weathermap->end();it++)
-//    {
 //        qDebug()<<it.key()<<it.value();
-//    }
     setWeatherUnit();//ui显示
     m_Reply->deleteLater();//释放内存
 }
@@ -74,7 +76,7 @@ void page_env::getWeatherInfo(QNetworkReply*){
 void page_env::setWeatherUnit(){
     //天气
     QString t=weathermap->value("type");
-//    t="多云";//debug
+//    t="大雪";//debug
     ui->type_icon->setFont(iconFont);
     ui->type->setText(t);
     //天气情况
@@ -88,9 +90,15 @@ void page_env::setWeatherUnit(){
     }else if(t.contains("阴")){
         ui->type_icon->setText(_icon_cloud);
         ui->img->setStyleSheet("#img{border-image: url(:/image/overcast.png);}");
-    }else if(t=="多云"){
+    }else if(t.contains("多云")){
         ui->type_icon->setText(_icon_cloud_sun);
         ui->img->setStyleSheet("#img{border-image: url(:/image/cloudy.png);}");
+    }else if(t.contains("雪")){
+        ui->type_icon->setText(_icon_snow);
+        ui->img->setStyleSheet("#img{border-image: url(:/image/snow.png);}");
+    }else if(t.contains("霾")){
+        ui->type_icon->setText(_icon_haze);
+        ui->img->setStyleSheet("#img{border-image: url(:/image/haze.png);}");
     }else{//其他待补充
         ui->type_icon->setText(_icon_other);
         ui->img->setStyleSheet("#img{border-image: url(:/image/other.png);}");
@@ -99,12 +107,12 @@ void page_env::setWeatherUnit(){
     ui->tem->setText(weathermap->value("tem"));
     ui->tem_hl->setText("H:"+weathermap->value("tem_h")+"\nL:"+weathermap->value("tem_l"));
     //空气质量
-    ui->quality->setText(weathermap->value("quality"));
+    ui->quality->setText(weathermap->value("quality").at(0));
     //pm10\pm2.5
     ui->pm->setText("PM2.5:"+weathermap->value("pm25")+"\nPM 10:"+weathermap->value("pm10"));
     //位置
     ui->local->setFont(iconFont);
-    ui->local->setText("户外环境: "+QString(_icon_local)+"北京市");
+    ui->local->setText("户外环境: "+QString(_icon_local)+" 北京市");
     //notice
     ui->notice->setText(weathermap->value("notice"));
 }
@@ -117,4 +125,23 @@ void page_env::updateTime(){
     ui->sys_time->setText(time);
     ui->sys_date->setText(date);
     ui->sys_week->setText(week);
+}
+
+void page_env::setCurrentPort(QSerialPort** port){
+    currentport=*port;
+    connect(currentport,&QSerialPort::readyRead,this,&page_env::updateSerPortInfo);//连接串口，获取到之后执行
+}
+
+void page_env::updateSerPortInfo(){
+    if(currentport==nullptr)return;
+    qDebug()<<"env"+currentport->portName();
+//    qDebug()<<currentport->readAll();
+    QString info[1];
+    info[0]=currentport->readLine().replace("\r\n","");
+    qDebug()<<info[0];
+    setMonitorUnit(info);
+}
+
+void page_env::setMonitorUnit(QString* info){
+    ui->s_tem->setText(info[0]+"℃");
 }

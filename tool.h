@@ -1,6 +1,7 @@
 #ifndef TOOL_H
 #define TOOL_H
 #include <QFontDatabase>
+#include <QDebug>
 
 //目录
 #define _icon_env QChar(0xf06c)//leaf
@@ -31,6 +32,10 @@
 
 #define _icon_local QChar(0xf3c5)//map-marker-alt
 #define _icon_other QChar(0xf118)//smile
+#define _icon_haze QChar(0xf534)//infinity
+#define _icon_snow QChar(0xf2dc)//snow
+#define _icon_refresh QChar(0xf01e)//redo
+#define _icon_tem QChar(0xf2c9)//tem
 
 class Tool
 {

@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkRequest>
+#include <QtSerialPort/QSerialPort>
+#include <QtSerialPort/QSerialPortInfo>
 #include <QtNetwork/QNetworkReply>
 #include <QJsonDocument>
 #include <QJsonArray>
@@ -21,9 +23,14 @@ class page_env : public QWidget
 public:
     explicit page_env(QWidget *parent = nullptr);
     ~page_env();
+    //天气模块相关
     void setWeatherUnit();//设置天气部分ui
     void updateWeather();//更新天气
-    void updateTime();
+    void updateTime();//刷新时间
+    //串口通信相关
+    void setCurrentPort(QSerialPort** port);//设置已实例化的串口类
+    void updateSerPortInfo();//接受数据并更新
+    void setMonitorUnit(QString info[]);
 public slots:
     void getWeatherInfo(QNetworkReply*);//获取天气信息
 private:
@@ -31,6 +38,7 @@ private:
     QFont iconFont;
     QNetworkReply *m_Reply;//天气相关
     QMap<QString,QString>* weathermap;//天气信息
+    QSerialPort* currentport=nullptr;
 
 };
 

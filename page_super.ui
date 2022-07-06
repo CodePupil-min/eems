@@ -74,12 +74,18 @@ background:#155CA6
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="styleSheet">
+         <string notr="true">border:none;</string>
+        </property>
        </widget>
       </item>
       <item>
        <widget class="QLabel" name="label_2">
         <property name="text">
          <string>密码</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>
@@ -90,6 +96,9 @@ background:#155CA6
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:none;</string>
         </property>
         <property name="echoMode">
          <enum>QLineEdit::Password</enum>
@@ -112,7 +121,7 @@ background:#155CA6
          </sizepolicy>
         </property>
         <property name="styleSheet">
-         <string notr="true"/>
+         <string notr="true">border:none;</string>
         </property>
         <property name="echoMode">
          <enum>QLineEdit::Password</enum>
@@ -124,9 +133,12 @@ background:#155CA6
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Expanding</enum>
+        </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>40</width>
+          <width>50</width>
           <height>20</height>
          </size>
         </property>

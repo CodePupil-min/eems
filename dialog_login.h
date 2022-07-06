@@ -2,6 +2,7 @@
 #define DIALOG_LOGIN_H
 
 #include <QDialog>
+#include <QTimer>
 #include"database.h"
 #include "tool.h"
 

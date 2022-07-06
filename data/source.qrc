@@ -6,6 +6,8 @@
         <file>rain.png</file>
         <file>overcast.png</file>
         <file>other.png</file>
+        <file>haze.png</file>
+        <file>snow.png</file>
     </qresource>
     <qresource prefix="/font">
         <file>fa-solid-900.ttf</file>

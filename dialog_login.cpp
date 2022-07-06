@@ -17,7 +17,6 @@ dialog_login::dialog_login(QWidget *parent) :
     ui->usericon->setText(_icon_user);
     ui->pwdicon->setFont(iconFont); //设置图标
     ui->pwdicon->setText(_icon_key);
-    ui->info->hide();
 }
 
 dialog_login::~dialog_login()
@@ -35,15 +34,19 @@ void dialog_login::pressLogin(){
             username=isSuper?"管理员":user;
         }
         else{
-            ui->info->show();
-            ui->info->setText("密码错误");
+            ui->info_pwd->setText("密码错误");
             ui->password->setText("");
         }
     }
     else{
-        ui->info->show();
-        ui->info->setText("用户不存在");
+        ui->info_user->setText("无此用户");
+        ui->username->setText("");
+        ui->password->setText("");
     }
+    QTimer::singleShot(1000, [this]() {
+        ui->info_pwd->setText("");
+        ui->info_user->setText("");
+    });
     if(isLogin){//登陆成功发射登陆成功信号并清空输入框
         pressCancel();
         emit this->loginSuccess();
@@ -52,7 +55,7 @@ void dialog_login::pressLogin(){
 void dialog_login::pressCancel(){
     ui->username->setText("");
     ui->password->setText("");
-    ui->info->hide();
-    ui->info->setText("");
+    ui->info_user->setText("");
+    ui->info_pwd->setText("");
     this->reject();//取消登录直接退出
 }

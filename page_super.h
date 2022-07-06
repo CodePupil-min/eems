@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QStandardItemModel>
-#include<QTimer>
+#include <QTimer>
 #include "database.h"
 #include "confirm.h"
 #include "tool.h"

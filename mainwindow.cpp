@@ -31,6 +31,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->menu_exit,&QPushButton::clicked,this,&MainWindow::pressExit);
     updateUserStatus();//更新登录状态
     connect(d_login,&dialog_login::loginSuccess,this,&MainWindow::loginSuccess);//登陆成功更新状态
+    //串口相关,net、env、dev共用一个串口类
+    QSerialPort* currentport=new QSerialPort();
+    p_net->setCurrentPort(&currentport);
+    p_env->setCurrentPort(&currentport);
+    p_dev->setCurrentPort(&currentport);
 }
 
 MainWindow::~MainWindow()

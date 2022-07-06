@@ -45,8 +45,8 @@ private:
     page_super* p_super;
     dialog_login* d_login;
     //登录状态
-    bool isLogin=1;
-    bool isSuper=1;
+    bool isLogin=0;
+    bool isSuper=0;
     QString username="";
 
 };

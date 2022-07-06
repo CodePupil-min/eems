@@ -20,3 +20,11 @@ void page_dev::setTitle(bool isLogin){
     QString title=isLogin?"设备控制":"设备控制(登录后可用)";
     ui->title->setText(title);
 }
+void page_dev::setCurrentPort(QSerialPort** port){
+    currentport=*port;
+    connect(ui->send,&QPushButton::clicked,this,&page_dev::sendPortMsg);
+}
+void page_dev::sendPortMsg(){
+    if(currentport==nullptr)return;
+    currentport->write(ui->info->text().toLocal8Bit());
+}

@@ -81,7 +81,7 @@ void page_super::addRecord(){
     }
     if(db->isUserExist(user)){
         confirm *c=new confirm(this);
-        if(!c->reveal("用户“"+user+"”已存在，是否修改密码",_icon_warn)){delete c;return;}//取消
+        if(!c->reveal("用户“"+user+"”已存在，是否修改密码",_icon_key)){delete c;return;}//取消
         db->alterPwd(user,pwd);//确认修改
     }else{
         confirm *c=new confirm(this);
