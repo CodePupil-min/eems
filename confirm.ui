@@ -21,10 +21,9 @@
   </property>
   <property name="styleSheet">
    <string notr="true">#confirm{
-	background-color: #D2DFEF
-}
-
-</string>
+border:1px solid #7EABFF;
+background-color:#D2DFEF;
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">

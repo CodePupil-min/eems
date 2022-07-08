@@ -12,6 +12,13 @@ page_env::page_env(QWidget *parent) :
     ui->logo->setText(_icon_env);
     ui->icon_s_tem->setFont(iconFont);
     ui->icon_s_tem->setText(_icon_tem);
+    ui->icon_s_hum->setFont(iconFont);
+    ui->icon_s_hum->setText(_icon_hum);
+
+    ui->light->setFont(iconFont);
+    ui->light->setText(_icon_light);
+    ui->motor->setFont(iconFont);
+    ui->motor->setText(_icon_fan);
 
     weathermap=new QMap<QString,QString>();
     //更新系统时间
@@ -24,6 +31,17 @@ page_env::page_env(QWidget *parent) :
     QTimer *timer1 = new QTimer(this);
     connect(timer1,&QTimer::timeout,this,&page_env::updateWeather);
     timer1->start(600000);//十分钟一次
+    //设备控制按钮
+    QGraphicsDropShadowEffect *shadow=new QGraphicsDropShadowEffect(this);
+    QGraphicsDropShadowEffect *shadow1=new QGraphicsDropShadowEffect(this);
+    shadow->setOffset(0,0);
+    shadow->setBlurRadius(30);
+    shadow1->setOffset(0,0);
+    shadow1->setBlurRadius(30);
+    ui->motor->setGraphicsEffect(shadow);
+    ui->light->setGraphicsEffect(shadow1);
+    connect(ui->light,&QPushButton::clicked,this,&page_env::controlDev);
+    connect(ui->motor,&QPushButton::clicked,this,&page_env::controlDev);
 }
 
 page_env::~page_env()
@@ -132,16 +150,53 @@ void page_env::setCurrentPort(QSerialPort** port){
     connect(currentport,&QSerialPort::readyRead,this,&page_env::updateSerPortInfo);//连接串口，获取到之后执行
 }
 
-void page_env::updateSerPortInfo(){
+void page_env::updateSerPortInfo(){//包括设备状态
     if(currentport==nullptr)return;
     qDebug()<<"env"+currentport->portName();
 //    qDebug()<<currentport->readAll();
-    QString info[1];
-    info[0]=currentport->readLine().replace("\r\n","");
-    qDebug()<<info[0];
+    QString s = currentport->readAll().replace("\r\n","");
+    QStringList info=s.split(",");
+//    for(QString s:info){qDebug()<<s;}
+    if(info.length()<2)return;//数据是否有效
     setMonitorUnit(info);
 }
 
-void page_env::setMonitorUnit(QString* info){
-    ui->s_tem->setText(info[0]+"℃");
+void page_env::setMonitorUnit(QStringList info){
+    //判断临界值
+    if(info[0].toInt()>40)ui->tem_unit->setStyleSheet("color:white;background-color:red");
+    else ui->tem_unit->setStyleSheet("color:white;background-color:#7EABFF");
+    //填写数据
+    QLabel* labels[]={ui->s_tem,ui->s_hum};
+    QString dws[]={" ℃"," %RH"};
+    for(int i=0;i<int(sizeof(labels)/sizeof(QLabel*));i++){
+//        qDebug()<<i;
+        labels[i]->setText(info[i]+dws[i]);
+    }
+}
+
+void page_env::setDeviceUnit(){
+    //根据登录状态判断是否启用按钮
+    QString disable="background-color:#c7c7c7;color:white;border:2px solid #c7c7c7;";
+    ui->light->setEnabled(isLogin);
+    ui->motor->setEnabled(isLogin);
+    if(!isLogin){
+        ui->light->setStyleSheet(disable);
+        ui->motor->setStyleSheet(disable);
+        return;
+    }
+    QString off="background-color:white;color:#7EABFF;border:2px solid #7EABFF;";
+    QString on="background-color:#7EABFF;color:white;border:2px solid white;";
+    if(light)ui->light->setStyleSheet(on);
+    else ui->light->setStyleSheet(off);
+    if(motor)ui->motor->setStyleSheet(on);
+    else ui->motor->setStyleSheet(off);
+}
+void page_env::controlDev(){
+    QString btnname=QObject::sender()->objectName();
+//    qDebug()<<btnname;
+    QString::compare(btnname,ui->light->objectName())?motor=!motor:light=!light;
+    QString s=QString::number(motor)+QString::number(light);
+//    qDebug()<<s;
+    setDeviceUnit();//改变按钮状态
+    currentport->write(s.toLocal8Bit());
 }

@@ -36,6 +36,11 @@
 #define _icon_snow QChar(0xf2dc)//snow
 #define _icon_refresh QChar(0xf01e)//redo
 #define _icon_tem QChar(0xf2c9)//tem
+#define _icon_hum QChar(0xf46a)//hum
+
+#define _icon_light QChar(0xf0eb)//light
+#define _icon_fan QChar(0xf863)//fan
+
 
 class Tool
 {

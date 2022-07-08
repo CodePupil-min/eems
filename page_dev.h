@@ -21,6 +21,7 @@ public:
      //串口通信相关
     void setCurrentPort(QSerialPort** port);//设置已实例化的串口类
     void sendPortMsg();
+    bool isLogin=false;
 private:
     Ui::page_dev *ui;
     QFont iconFont;

@@ -28,6 +28,7 @@ public:
     void chooseDataP();//数据管理页
     void chooseNetP();//网络连接页
     void manageUsers();//用户管理页，仅管理员可用
+    void changeMenuBtn(QPushButton** btn);//切换按钮样式
     void setMenuButton();//设置按钮动态样式
     void updateUserStatus();//更新登陆状态
     void pressExit();//退出登录

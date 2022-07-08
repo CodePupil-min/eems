@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->mainPage->addWidget(p_net);
     ui->mainPage->addWidget(p_super);
     //设置环境检测为主界面
-    ui->mainPage->setCurrentWidget(this->p_env);
+    chooseEnvP();
     //按钮和界面联系起来
     connect(ui->menu_env,&QPushButton::clicked,this,&MainWindow::chooseEnvP);
     connect(ui->menu_dev,&QPushButton::clicked,this,&MainWindow::chooseDevP);
@@ -44,24 +44,35 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::chooseEnvP(){
+    p_env->setDeviceUnit();
     ui->mainPage->setCurrentWidget(this->p_env);
+    changeMenuBtn(&(ui->menu_env));
 }
 void MainWindow::chooseDevP(){
     p_dev->setTitle(isLogin);
     ui->mainPage->setCurrentWidget(this->p_dev);
+    changeMenuBtn(&(ui->menu_dev));
 }
 void MainWindow::chooseDataP(){
     ui->mainPage->setCurrentWidget(this->p_data);
+    changeMenuBtn(&(ui->menu_data));
 }
 void MainWindow::chooseNetP(){
     ui->mainPage->setCurrentWidget(this->p_net);
+    changeMenuBtn(&(ui->menu_net));
 }
 void MainWindow::manageUsers(){
     ui->mainPage->setCurrentWidget(this->p_super);
+    if(isLogin&&isSuper)changeMenuBtn(&(ui->user));
+}
+void MainWindow::changeMenuBtn(QPushButton** btn){
+    for(QPushButton*b:ui->menu->findChildren<QPushButton *>())
+        b->setStyleSheet("background-color:#375DA5;");
+    (*btn)->setStyleSheet("background-color:#12316B;");
 }
 void MainWindow::login(){
     d_login->exec();
-    ui->mainPage->setCurrentWidget(this->p_env);
+    chooseEnvP();
 }
 
 void MainWindow::pressExit(){
@@ -71,7 +82,7 @@ void MainWindow::pressExit(){
     }
     isLogin=false;
     isSuper=false;
-    ui->mainPage->setCurrentWidget(this->p_env);
+    chooseEnvP();
     updateUserStatus();
 }
 void MainWindow::setMenuButton(){
@@ -178,11 +189,13 @@ bool MainWindow::eventFilter(QObject *obj,QEvent *event)
 }
 
 void MainWindow::updateUserStatus(){
+    p_env->isLogin=isLogin;//更新env页登录状态
+    p_dev->isLogin=isLogin;
     disconnect(ui->user,&QPushButton::clicked,0,0);
     if(!isLogin){//未登录不能控制设备
         connect(ui->user,&QPushButton::clicked,this,&MainWindow::login);
-        for(QPushButton*btn:p_dev->findChildren<QPushButton *>())
-            btn->setEnabled(false);
+//        for(QPushButton*btn:p_dev->findChildren<QPushButton *>())
+//            btn->setEnabled(false);
         ui->user->setText(_icon_not_login);
         return;
     }

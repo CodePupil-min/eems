@@ -31,7 +31,7 @@ void page_net::setSerialPortUnit(){
     ui->port_data->setCurrentText("8");
     ui->port_stop->setCurrentText("1");
     ui->port_baud->setCurrentText("115200");
-    ui->port_parity->setCurrentText("奇校验");
+    ui->port_parity->setCurrentText("无校验");
     //选中并打开串口
     openPort();
     connect(ui->sure,&QPushButton::clicked,this,&page_net::openPort);

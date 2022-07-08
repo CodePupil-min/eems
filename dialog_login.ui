@@ -21,7 +21,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">#dialog_login{
-border:1px solid #28BFA0;
+border:1px solid #7EABFF;
 background-color:#D2DFEF;
 }</string>
   </property>

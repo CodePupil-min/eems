@@ -91,10 +91,10 @@ font: 15pt;
 }
 QPushButton:hover{
 font:10pt;
-background-color:#698ED2
+/*background-color:#698ED2*/
 }
 QPushButton:pressed{
-background:#12316B
+background-color:#12316B
 }
 </string>
       </property>
