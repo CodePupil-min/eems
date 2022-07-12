@@ -13,6 +13,7 @@
 #include <QTimer>
 #include <QGraphicsDropShadowEffect>
 #include "tool.h"
+#include "database.h"
 
 namespace Ui {
 class page_env;
@@ -31,21 +32,27 @@ public:
     //串口通信相关
     void setCurrentPort(QSerialPort** port);//设置已实例化的串口类
     void updateSerPortInfo();//接受数据并更新
-    void setMonitorUnit(QStringList info);
+    void setMonitorUnit();//更新环境数据
 
     void setDeviceUnit();//更新设备状态
     void controlDev();//控制设备信号
+
+    void savedata();//保存数据
     bool isLogin=false;
 public slots:
     void getWeatherInfo(QNetworkReply*);//获取天气信息
+    void glitter();
 private:
     Ui::page_env *ui;
     QFont iconFont;
+    database* db;
     QNetworkReply *m_Reply;//天气相关
     QMap<QString,QString>* weathermap;//天气信息
     QSerialPort* currentport=nullptr;
+    QStringList env_info;
     bool light=false;
     bool motor=false;
+    QTimer* gli;
 };
 
 #endif // PAGE_ENV_H

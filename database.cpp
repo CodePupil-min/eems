@@ -9,12 +9,14 @@ database::database()
         DB_users.setDatabaseName("datas.db");
     }
     //第一次运行,数据库不存在，系统自动新建数据库
-    //创建带管理员的表
     DB_users.open();
     if(DB_users.tables().size()==0){
         QSqlQuery sql(DB_users);
+        //创建带管理员的表
         sql.exec("create table users (username text(255) primary key not null, password text(255) not null, super integer(1) not null);");
         sql.exec("INSERT INTO users VALUES ('root', '12345678',1);");
+        //创建环境监测数据表
+        sql.exec("CREATE TABLE envdatas (date text(15),time text(10),tem text(5),hum text(5),zd text(5),fc text(5),atm text(5));");
     }
     DB_users.close();
 }
@@ -83,6 +85,53 @@ bool database::alterPwd(QString user,QString pwd){
     DB_users.open();
     QSqlQuery sql(DB_users);
     QString sqlstr="UPDATE users SET password='"+pwd+"' WHERE username='"+user+"'";
+    bool f=sql.exec(sqlstr);
+    DB_users.close();
+    return f;
+}
+
+bool database::insertData(QStringList info){
+    QDateTime dt=QDateTime::currentDateTime();
+    QString date=dt.date().toString("yyyy/MM/dd");
+    QString time=dt.time().toString("hh:mm:ss");
+    QString tem=info[0];
+    QString hum=info[1];
+    QString zd=info[2];
+    QString fc=info[3];
+    QString atm=info[4];
+    DB_users.open();
+    QSqlQuery sql(DB_users);
+    QString sqlstr="INSERT INTO envdatas VALUES ('"+date+"','"+time+"','"+tem+"','"+hum+"','"+zd+"','"+fc+"','"+atm+"')";
+//    qDebug()<<sqlstr;
+    bool f=sql.exec(sqlstr);
+    DB_users.close();
+    return f;
+}
+
+QVector<QVector<QString>> database::readData(QString date){
+    QVector<QVector<QString>>vector;
+    DB_users.open();
+    QSqlQuery sql(DB_users);
+    QString sqlstr="SELECT * from envdatas where date='"+date+"';";
+//    qDebug()<<sqlstr;
+    sql.exec(sqlstr);
+    while(sql.next()){
+        QVector<QString>va={sql.value(0).toString(),//date
+                            sql.value(1).toString(),//time
+                            sql.value(2).toString(),//tem
+                            sql.value(3).toString(),//hum
+                            sql.value(4).toString(),//zd
+                            sql.value(5).toString(),//fc
+                            sql.value(6).toString()};//atm
+        vector.append(va);
+    }
+    DB_users.close();
+    return vector;
+}
+bool database::removeDay(QString date){
+    DB_users.open();
+    QSqlQuery sql(DB_users);
+    QString sqlstr="delete from envdatas where date='"+date+"'";
     bool f=sql.exec(sqlstr);
     DB_users.close();
     return f;

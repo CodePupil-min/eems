@@ -6,6 +6,8 @@
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
+#include <QDateTime>
+#include "tool.h"
 class database
 {
 public:
@@ -20,8 +22,12 @@ public:
     bool removeUser(QString user);//删除用户//删除前先判断是否存在
     bool alterPwd(QString user,QString pwd);//修改密码
     //环境信息存储表
+    bool insertData(QStringList info);//插入数据
+    bool removeDay(QString date);//删除某一天全部数据
+    QVector<QVector<QString>> readData(QString date);
 
 private:
+
     bool findUser(QString user);//查找用户
     QSqlDatabase DB_users;
     QString username="";

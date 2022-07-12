@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>791</width>
-    <height>626</height>
+    <height>632</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -491,7 +491,7 @@ font:12pt;
 </string>
         </property>
         <property name="text">
-         <string>网络连接</string>
+         <string>通信连接</string>
         </property>
        </widget>
       </item>

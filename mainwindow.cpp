@@ -51,11 +51,12 @@ void MainWindow::chooseEnvP(){
 void MainWindow::chooseDevP(){
     p_dev->setTitle(isLogin);
     ui->mainPage->setCurrentWidget(this->p_dev);
-    changeMenuBtn(&(ui->menu_dev));
+    if(isLogin)changeMenuBtn(&(ui->menu_dev));
 }
 void MainWindow::chooseDataP(){
     ui->mainPage->setCurrentWidget(this->p_data);
-    changeMenuBtn(&(ui->menu_data));
+    if(isLogin)changeMenuBtn(&(ui->menu_data));
+    p_data->updateRecord();
 }
 void MainWindow::chooseNetP(){
     ui->mainPage->setCurrentWidget(this->p_net);
@@ -82,8 +83,8 @@ void MainWindow::pressExit(){
     }
     isLogin=false;
     isSuper=false;
-    chooseEnvP();
     updateUserStatus();
+    chooseEnvP();
 }
 void MainWindow::setMenuButton(){
     QFont iconFont=(new Tool())->getIconFont();
@@ -191,16 +192,18 @@ bool MainWindow::eventFilter(QObject *obj,QEvent *event)
 void MainWindow::updateUserStatus(){
     p_env->isLogin=isLogin;//更新env页登录状态
     p_dev->isLogin=isLogin;
+    p_data->isLogin=isLogin;
     disconnect(ui->user,&QPushButton::clicked,0,0);
     if(!isLogin){//未登录不能控制设备
         connect(ui->user,&QPushButton::clicked,this,&MainWindow::login);
-//        for(QPushButton*btn:p_dev->findChildren<QPushButton *>())
-//            btn->setEnabled(false);
+        disconnect(ui->menu_dev,&QPushButton::clicked,0,0);
+        disconnect(ui->menu_data,&QPushButton::clicked,0,0);
         ui->user->setText(_icon_not_login);
         return;
     }
-    for(QPushButton*btn:p_dev->findChildren<QPushButton *>())//登陆后使能dev按钮
-        btn->setEnabled(true);
+    //登陆后按钮有效
+    connect(ui->menu_dev,&QPushButton::clicked,this,&MainWindow::chooseDevP);
+    connect(ui->menu_data,&QPushButton::clicked,this,&MainWindow::chooseDataP);
     if(isSuper){//管理员
         connect(ui->user,&QPushButton::clicked,this,&MainWindow::manageUsers);
         ui->user->setText(_icon_super);

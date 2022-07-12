@@ -35,12 +35,18 @@
 #define _icon_haze QChar(0xf534)//infinity
 #define _icon_snow QChar(0xf2dc)//snow
 #define _icon_refresh QChar(0xf01e)//redo
+
 #define _icon_tem QChar(0xf2c9)//tem
 #define _icon_hum QChar(0xf46a)//hum
+#define _icon_zd QChar(0xf042)//照度
+#define _icon_fc QChar(0xf604)//lung
+#define _icon_atm QChar(0xf1ce)//atm
 
 #define _icon_light QChar(0xf0eb)//light
 #define _icon_fan QChar(0xf863)//fan
 
+#define node_num 5//节点数
+#define savetime 5000
 
 class Tool
 {
