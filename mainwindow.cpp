@@ -36,6 +36,8 @@ MainWindow::MainWindow(QWidget *parent)
     p_net->setCurrentPort(&currentport);
     p_env->setCurrentPort(&currentport);
     p_dev->setCurrentPort(&currentport);
+
+    ui->menu_dev->hide();
 }
 
 MainWindow::~MainWindow()

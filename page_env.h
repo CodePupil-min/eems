@@ -12,9 +12,10 @@
 #include <QJsonObject>
 #include <QTimer>
 #include <QGraphicsDropShadowEffect>
+#include <QtCharts>
 #include "tool.h"
 #include "database.h"
-
+QT_CHARTS_USE_NAMESPACE
 namespace Ui {
 class page_env;
 }
@@ -38,10 +39,14 @@ public:
     void controlDev();//控制设备信号
 
     void savedata();//保存数据
+
+    void updateChart();
+    void createChart(int i,QChart **chart);//创建图表
     bool isLogin=false;
 public slots:
     void getWeatherInfo(QNetworkReply*);//获取天气信息
     void glitter();
+    void glitter2();
 private:
     Ui::page_env *ui;
     QFont iconFont;
@@ -50,9 +55,14 @@ private:
     QMap<QString,QString>* weathermap;//天气信息
     QSerialPort* currentport=nullptr;
     QStringList env_info;
+    QStringList env_info2;
     bool light=false;
     bool motor=false;
     QTimer* gli;
+    QTimer* gli2;
+//    QVector<QVector<float>>data;//环境数据
+//    QVector<QString>time;//时间
+//    int length=6;//图表显示数据个数
 };
 
 #endif // PAGE_ENV_H

@@ -7,7 +7,7 @@
 #define _icon_env QChar(0xf06c)//leaf
 #define _icon_dev QChar(0xf0e8)//sitemap
 #define _icon_data QChar(0xf1c0)//database
-#define _icon_net QChar(0xf1eb)//wifi
+#define _icon_net QChar(0xf013)//cog
 #define _icon_exit QChar(0xf2f5)//sign-out-alt
 
 #define _icon_lock QChar(0xf023)//lock
@@ -46,7 +46,7 @@
 #define _icon_fan QChar(0xf863)//fan
 
 #define node_num 5//节点数
-#define savetime 5000
+#define savetime 10000
 
 class Tool
 {

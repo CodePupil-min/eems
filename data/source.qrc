@@ -8,6 +8,7 @@
         <file>other.png</file>
         <file>haze.png</file>
         <file>snow.png</file>
+        <file>leaf.jpg</file>
     </qresource>
     <qresource prefix="/font">
         <file>fa-solid-900.ttf</file>

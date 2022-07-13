@@ -17,6 +17,7 @@ database::database()
         sql.exec("INSERT INTO users VALUES ('root', '12345678',1);");
         //创建环境监测数据表
         sql.exec("CREATE TABLE envdatas (date text(15),time text(10),tem text(5),hum text(5),zd text(5),fc text(5),atm text(5));");
+        sql.exec("CREATE TABLE envdatas2 (date text(15),time text(10),tem text(5),hum text(5),zd text(5),fc text(5),atm text(5));");
     }
     DB_users.close();
 }
@@ -90,7 +91,7 @@ bool database::alterPwd(QString user,QString pwd){
     return f;
 }
 
-bool database::insertData(QStringList info){
+bool database::insertData(QStringList info,int n){
     QDateTime dt=QDateTime::currentDateTime();
     QString date=dt.date().toString("yyyy/MM/dd");
     QString time=dt.time().toString("hh:mm:ss");
@@ -102,17 +103,19 @@ bool database::insertData(QStringList info){
     DB_users.open();
     QSqlQuery sql(DB_users);
     QString sqlstr="INSERT INTO envdatas VALUES ('"+date+"','"+time+"','"+tem+"','"+hum+"','"+zd+"','"+fc+"','"+atm+"')";
+    if(n==2)sqlstr="INSERT INTO envdatas2 VALUES ('"+date+"','"+time+"','"+tem+"','"+hum+"','"+zd+"','"+fc+"','"+atm+"')";
 //    qDebug()<<sqlstr;
     bool f=sql.exec(sqlstr);
     DB_users.close();
     return f;
 }
 
-QVector<QVector<QString>> database::readData(QString date){
+QVector<QVector<QString>> database::readData(QString date,int n){
     QVector<QVector<QString>>vector;
     DB_users.open();
     QSqlQuery sql(DB_users);
     QString sqlstr="SELECT * from envdatas where date='"+date+"';";
+    if(n==2)sqlstr="SELECT * from envdatas2 where date='"+date+"';";
 //    qDebug()<<sqlstr;
     sql.exec(sqlstr);
     while(sql.next()){
@@ -128,10 +131,32 @@ QVector<QVector<QString>> database::readData(QString date){
     DB_users.close();
     return vector;
 }
-bool database::removeDay(QString date){
+QVector<QVector<QString>> database::readData10(QString date,int n){
+    QVector<QVector<QString>>vector;
+    DB_users.open();
+    QSqlQuery sql(DB_users);
+    QString sqlstr="SELECT * FROM (select * from envdatas where date='"+date+"' order by time desc limit 10) aa ORDER BY time";
+    if(n==2)sqlstr="SELECT * FROM (select * from envdatas2 where date='"+date+"' order by time desc limit 10) aa ORDER BY time";
+//    qDebug()<<sqlstr;
+    sql.exec(sqlstr);
+    while(sql.next()){
+        QVector<QString>va={sql.value(0).toString(),//date
+                            sql.value(1).toString(),//time
+                            sql.value(2).toString(),//tem
+                            sql.value(3).toString(),//hum
+                            sql.value(4).toString(),//zd
+                            sql.value(5).toString(),//fc
+                            sql.value(6).toString()};//atm
+        vector.append(va);
+    }
+    DB_users.close();
+    return vector;
+}
+bool database::removeDay(QString date,int n){
     DB_users.open();
     QSqlQuery sql(DB_users);
     QString sqlstr="delete from envdatas where date='"+date+"'";
+    if(n==2)sqlstr="delete from envdatas2 where date='"+date+"'";
     bool f=sql.exec(sqlstr);
     DB_users.close();
     return f;

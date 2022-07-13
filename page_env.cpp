@@ -20,6 +20,16 @@ page_env::page_env(QWidget *parent) :
     ui->icon_s_fc->setText(_icon_fc);
     ui->icon_s_atm->setFont(iconFont);
     ui->icon_s_atm->setText(_icon_atm);
+    ui->icon_s_tem_2->setFont(iconFont);
+    ui->icon_s_tem_2->setText(_icon_tem);
+    ui->icon_s_hum_2->setFont(iconFont);
+    ui->icon_s_hum_2->setText(_icon_hum);
+    ui->icon_s_zd_2->setFont(iconFont);
+    ui->icon_s_zd_2->setText(_icon_zd);
+    ui->icon_s_fc_2->setFont(iconFont);
+    ui->icon_s_fc_2->setText(_icon_fc);
+    ui->icon_s_atm_2->setFont(iconFont);
+    ui->icon_s_atm_2->setText(_icon_atm);
 
     ui->light->setFont(iconFont);
     ui->light->setText(_icon_light);
@@ -29,8 +39,9 @@ page_env::page_env(QWidget *parent) :
     weathermap=new QMap<QString,QString>();
     db=new database();
     //初始化环境信息
-    QString nodes="00,00,0,00,00,00";//温度，湿度，照度，粉尘浓度，大气压强，设备状态
+    QString nodes="00,00,0,00,00,0,00";//温度，湿度，照度，粉尘浓度，大气压强，序号，设备状态
     env_info=nodes.split(",");
+    env_info2=nodes.split(",");
     //更新系统时间
     updateTime();
     QTimer *timer = new QTimer(this);
@@ -45,10 +56,12 @@ page_env::page_env(QWidget *parent) :
     QTimer *timer2 = new QTimer(this);
     connect(timer2,&QTimer::timeout,this,&page_env::savedata);
     timer2->start(savetime);//十秒一次（暂定）
-
+    //报警灯
     gli=new QTimer(this);
     connect(gli,&QTimer::timeout,this,&page_env::glitter);
-
+    //报警灯2
+    gli2=new QTimer(this);
+    connect(gli2,&QTimer::timeout,this,&page_env::glitter2);
     //设备控制按钮
     QGraphicsDropShadowEffect *shadow=new QGraphicsDropShadowEffect(this);
     QGraphicsDropShadowEffect *shadow1=new QGraphicsDropShadowEffect(this);
@@ -60,6 +73,17 @@ page_env::page_env(QWidget *parent) :
     ui->light->setGraphicsEffect(shadow1);
     connect(ui->light,&QPushButton::clicked,this,&page_env::controlDev);
     connect(ui->motor,&QPushButton::clicked,this,&page_env::controlDev);
+    //图表
+    //信息初始化
+//    for(int i=0;i<length;i++){
+//        QVector<float>va={0/*tem*/,0/*hum*/,0/*fc*/,0/*atm*/};
+//        time.append(QString::number(i));
+//        data.append(va);
+//    }
+//    updateChart();
+//    QTimer *timer3 = new QTimer(this);
+//    connect(timer3,&QTimer::timeout,this,&page_env::updateChart);
+//    timer3->start(1000);//一秒一次
 }
 
 page_env::~page_env()
@@ -103,8 +127,6 @@ void page_env::getWeatherInfo(QNetworkReply*){
     weathermap->insert("tem_h",today_weather.value("high").toString().replace("高温 ",""));//最高温
     weathermap->insert("tem_l",today_weather.value("low").toString().replace("低温 ",""));//最低温
     weathermap->insert("notice",today_weather.value("notice").toString());//建议
-//    for(auto it = weathermap->begin();it!=weathermap->end();it++)
-//        qDebug()<<it.key()<<it.value();
     setWeatherUnit();//ui显示
     m_Reply->deleteLater();//释放内存
 }
@@ -172,9 +194,11 @@ void page_env::updateSerPortInfo(){//包括设备状态
     if(currentport==nullptr)return;
     QString s = currentport->readAll().replace("\r\n","");
     QStringList info=s.split(",");
-    //温度，湿度，照度，粉尘浓度，大气压强，设备状态
-    if(info.length()<node_num+1)return;//数据无效
-    env_info=info;
+    //温度，湿度，照度，粉尘浓度，大气压强，序号，设备状态
+    if(info.length()<node_num+2)return;//数据无效
+    int n=info[5].toInt();
+    if(!(n==1||n==2))return;
+    n==1?env_info=info:env_info2=info;
     setMonitorUnit();//更新数据
     int devc_ml=info[info.length()-1].toInt();
     if(devc_ml!=0&&devc_ml!=1&&devc_ml!=10&&devc_ml!=11)return;
@@ -187,33 +211,60 @@ void page_env::glitter(){
     if(!QString::compare(ui->alarm->styleSheet(),on))ui->alarm->setStyleSheet(off);
     else ui->alarm->setStyleSheet(on);
 }
-
+void page_env::glitter2(){
+    QString on="background-color:red";
+    QString off="background-color:#c7c7c7";
+    if(!QString::compare(ui->alarm_2->styleSheet(),on))ui->alarm_2->setStyleSheet(off);
+    else ui->alarm_2->setStyleSheet(on);
+}
 void page_env::setMonitorUnit(){
+    QLabel* labels[]={ui->s_tem,ui->s_hum,ui->s_zd,ui->s_fc,ui->s_atm};
+    QLabel* labels2[]={ui->s_tem_2,ui->s_hum_2,ui->s_zd_2,ui->s_fc_2,ui->s_atm_2};
+    QString dws[]={" ℃"," %RH",""," mg/m³"," Kpa"};
+    QString zd[]={"暗","较暗","适宜","较亮","亮"};
     //温度临界值
     if(env_info[0].toFloat()<20)ui->s_tem->setStyleSheet("color:blue;");
     else if(env_info[0].toFloat()>35) ui->s_tem->setStyleSheet("color:red;");
     else ui->s_tem->setStyleSheet("color:green;");
+    //2
+    if(env_info2[0].toFloat()<20)ui->s_tem_2->setStyleSheet("color:blue;");
+    else if(env_info2[0].toFloat()>35) ui->s_tem_2->setStyleSheet("color:red;");
+    else ui->s_tem_2->setStyleSheet("color:green;");
     //湿度
     if(env_info[1].toFloat()>=45&&env_info[1].toFloat()<=65)ui->s_hum->setStyleSheet("color:green");
     else ui->s_hum->setStyleSheet("color:white");
+    //2
+    if(env_info2[1].toFloat()>=45&&env_info2[1].toFloat()<=65)ui->s_hum_2->setStyleSheet("color:green");
+    else ui->s_hum_2->setStyleSheet("color:white");
     //粉尘报警
-    if(env_info[3].toInt()>10){if(!gli->isActive())gli->start(500);}
+    if(env_info[3].toFloat()>10){if(!gli->isActive())gli->start(500);}
     else{
         gli->stop();
         ui->alarm->setStyleSheet("background-color:#c7c7c7");
     }
+    //2
+    if(env_info2[3].toFloat()>10){if(!gli2->isActive())gli2->start(500);}
+    else{
+        gli2->stop();
+        ui->alarm_2->setStyleSheet("background-color:#c7c7c7");
+    }
     //填写数据
-    QLabel* labels[]={ui->s_tem,ui->s_hum,ui->s_zd,ui->s_fc,ui->s_atm};
-    QString dws[]={" ℃"," %RH",""," mg/m³"," pa"};
-    QString zd[]={"暗","较暗","适宜","较亮","亮"};
     for(int i=0;i<node_num;i++){
         labels[i]->setText(env_info[i]+dws[i]);
+        labels2[i]->setText(env_info2[i]+dws[i]);
     }
     int z=ui->s_zd->text().toInt();
     if(z>=1&&z<=5)ui->s_zd->setText(zd[z-1]);
     else ui->s_zd->setText("未知");
     if(z==3)ui->s_zd->setStyleSheet("color:green");
     else ui->s_zd->setStyleSheet("color:white");
+    //2
+    int z2=ui->s_zd_2->text().toInt();
+    if(z2>=1&&z2<=5)ui->s_zd_2->setText(zd[z2-1]);
+    else ui->s_zd_2->setText("未知");
+    if(z2==3)ui->s_zd_2->setStyleSheet("color:green");
+    else ui->s_zd_2->setStyleSheet("color:white");
+
 }
 
 void page_env::setDeviceUnit(){
@@ -243,6 +294,58 @@ void page_env::controlDev(){
 
 void page_env::savedata(){
     if(!isLogin)return;//未登录
-    if(!QString::compare(env_info[0],"00"))return;//无效数据
-    db->insertData(env_info);//登录状态下存储数据
+    if(QString::compare(env_info[0],"00"))
+        db->insertData(env_info,1);//登录状态下存储数据
+    if(QString::compare(env_info2[0],"00"))
+        db->insertData(env_info2,2);//登录状态下存储数据
 }
+/*
+void page_env::updateChart(){
+     ui->chartView->chart()->removeAllSeries();
+     QChart *chart = new QChart();
+     //改数据
+     QString t=QTime::currentTime().toString("mm:ss");
+     QVector<float> va={env_info[0].toFloat(),
+                        env_info[1].toFloat(),
+                        env_info[3].toFloat(),
+                        env_info[4].toFloat()};
+     data.pop_front();
+     time.pop_front();
+     data.push_back(va);
+     time.push_back(t);
+     //更新图表
+     for(int i=0;i<1;i++){
+         createChart(i,&chart);
+     }
+     // 将图例隐藏
+     chart->legend()->hide();
+     //横坐标轴
+     QStringList categories;
+     for(int i=0;i<length;i++)
+         categories.append(time[i]);
+     QBarCategoryAxis *axisX = new QBarCategoryAxis();
+     axisX->append(categories);
+     chart->addAxis(axisX, Qt::AlignBottom);
+     chart->series()[0]->attachAxis(axisX);
+
+     QValueAxis *axisY = new QValueAxis();
+     chart->addAxis(axisY, Qt::AlignLeft);
+     chart->series()[0]->attachAxis(axisY);
+
+     ui->chartView->setChart(chart);
+     ui->chartView->setRenderHint(QPainter::Antialiasing);
+//     ui->chartView->show();
+}
+void page_env::createChart(int n,QChart **chart){
+    if(n<0||n>3)return;
+    QLineSeries *series = new QLineSeries();
+    for(int i=0;i<length;i++){
+        series->append(i,data[i][n]);
+    }
+    // 关联series，这一步很重要，必须要将series关联到QChart才能将数据渲染出来：
+    (*chart)->addSeries(series);
+    // 开启OpenGL，QLineSeries支持GPU绘制，Qt其他有的图表类型是不支持的。
+    series->setUseOpenGL(true);
+
+}
+*/

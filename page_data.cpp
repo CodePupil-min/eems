@@ -30,7 +30,9 @@ page_data::~page_data()
 }
 void page_data::updateRecord(){
     if(!isLogin)return;
-    data=db->readData(ui->date->text());
+    int n=ui->app->currentText().toInt();
+    ui->app_n->setText("（环境表-"+QString::number(n)+"）");
+    data=db->readData(ui->date->text(),n);
     content=new QStandardItemModel();
     //添加表头
     int col_num=7;
@@ -68,8 +70,9 @@ void page_data::updateRecord(){
 }
 void page_data::removeRecord(){
     QString date=ui->date->text();
+    int n=ui->app->currentText().toInt();
     confirm *c=new confirm(this);
-    if(!c->reveal("删除“"+date+"”的全部数据",_icon_trash)){delete c;return;}
-    db->removeDay(date);
+    if(!c->reveal("删除环境表"+ui->app->currentText()+"\n“"+date+"”的全部数据",_icon_trash)){delete c;return;}
+    db->removeDay(date,n);
     updateRecord();
 }
