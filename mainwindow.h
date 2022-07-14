@@ -33,6 +33,7 @@ public:
     void updateUserStatus();//更新登陆状态
     void pressExit();//退出登录
     void login();//登录窗口
+    void sendMsg();//传递env和dev的info
     bool eventFilter(QObject *obj, QEvent *event);//事件过滤器
 public slots:
     void loginSuccess();//登陆成功槽函数

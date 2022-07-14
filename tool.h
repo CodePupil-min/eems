@@ -5,7 +5,7 @@
 
 //目录
 #define _icon_env QChar(0xf06c)//leaf
-#define _icon_dev QChar(0xf0e8)//sitemap
+#define _icon_poll QChar(0xf681)//poll
 #define _icon_data QChar(0xf1c0)//database
 #define _icon_net QChar(0xf013)//cog
 #define _icon_exit QChar(0xf2f5)//sign-out-alt

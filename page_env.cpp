@@ -73,17 +73,6 @@ page_env::page_env(QWidget *parent) :
     ui->light->setGraphicsEffect(shadow1);
     connect(ui->light,&QPushButton::clicked,this,&page_env::controlDev);
     connect(ui->motor,&QPushButton::clicked,this,&page_env::controlDev);
-    //图表
-    //信息初始化
-//    for(int i=0;i<length;i++){
-//        QVector<float>va={0/*tem*/,0/*hum*/,0/*fc*/,0/*atm*/};
-//        time.append(QString::number(i));
-//        data.append(va);
-//    }
-//    updateChart();
-//    QTimer *timer3 = new QTimer(this);
-//    connect(timer3,&QTimer::timeout,this,&page_env::updateChart);
-//    timer3->start(1000);//一秒一次
 }
 
 page_env::~page_env()
@@ -299,53 +288,3 @@ void page_env::savedata(){
     if(QString::compare(env_info2[0],"00"))
         db->insertData(env_info2,2);//登录状态下存储数据
 }
-/*
-void page_env::updateChart(){
-     ui->chartView->chart()->removeAllSeries();
-     QChart *chart = new QChart();
-     //改数据
-     QString t=QTime::currentTime().toString("mm:ss");
-     QVector<float> va={env_info[0].toFloat(),
-                        env_info[1].toFloat(),
-                        env_info[3].toFloat(),
-                        env_info[4].toFloat()};
-     data.pop_front();
-     time.pop_front();
-     data.push_back(va);
-     time.push_back(t);
-     //更新图表
-     for(int i=0;i<1;i++){
-         createChart(i,&chart);
-     }
-     // 将图例隐藏
-     chart->legend()->hide();
-     //横坐标轴
-     QStringList categories;
-     for(int i=0;i<length;i++)
-         categories.append(time[i]);
-     QBarCategoryAxis *axisX = new QBarCategoryAxis();
-     axisX->append(categories);
-     chart->addAxis(axisX, Qt::AlignBottom);
-     chart->series()[0]->attachAxis(axisX);
-
-     QValueAxis *axisY = new QValueAxis();
-     chart->addAxis(axisY, Qt::AlignLeft);
-     chart->series()[0]->attachAxis(axisY);
-
-     ui->chartView->setChart(chart);
-     ui->chartView->setRenderHint(QPainter::Antialiasing);
-//     ui->chartView->show();
-}
-void page_env::createChart(int n,QChart **chart){
-    if(n<0||n>3)return;
-    QLineSeries *series = new QLineSeries();
-    for(int i=0;i<length;i++){
-        series->append(i,data[i][n]);
-    }
-    // 关联series，这一步很重要，必须要将series关联到QChart才能将数据渲染出来：
-    (*chart)->addSeries(series);
-    // 开启OpenGL，QLineSeries支持GPU绘制，Qt其他有的图表类型是不支持的。
-    series->setUseOpenGL(true);
-
-}
-*/

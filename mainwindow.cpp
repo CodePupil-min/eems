@@ -35,9 +35,10 @@ MainWindow::MainWindow(QWidget *parent)
     QSerialPort* currentport=new QSerialPort();
     p_net->setCurrentPort(&currentport);
     p_env->setCurrentPort(&currentport);
-    p_dev->setCurrentPort(&currentport);
-
-    ui->menu_dev->hide();
+    //同步数据
+    QTimer *timer = new QTimer(this);
+    connect(timer,&QTimer::timeout,this,&MainWindow::sendMsg);
+    timer->start(1000);//一秒一次
 }
 
 MainWindow::~MainWindow()
@@ -51,7 +52,6 @@ void MainWindow::chooseEnvP(){
     changeMenuBtn(&(ui->menu_env));
 }
 void MainWindow::chooseDevP(){
-    p_dev->setTitle(isLogin);
     ui->mainPage->setCurrentWidget(this->p_dev);
     if(isLogin)changeMenuBtn(&(ui->menu_dev));
 }
@@ -71,6 +71,10 @@ void MainWindow::manageUsers(){
 void MainWindow::changeMenuBtn(QPushButton** btn){
     for(QPushButton*b:ui->menu->findChildren<QPushButton *>())
         b->setStyleSheet("background-color:#375DA5;");
+    if(!isLogin){//未登录灰色按钮
+        ui->menu_dev->setStyleSheet("background-color:#375DA5;color:#b3b3b3;");
+        ui->menu_data->setStyleSheet("background-color:#375DA5;color:#b3b3b3;");
+    }
     (*btn)->setStyleSheet("background-color:#12316B;");
 }
 void MainWindow::login(){
@@ -96,7 +100,7 @@ void MainWindow::setMenuButton(){
 
     ui->menu_dev->setFont(iconFont); //设置字体
     ui->menu_dev->installEventFilter(this);
-    ui->menu_dev->setText(_icon_dev);
+    ui->menu_dev->setText(_icon_poll);
 
     ui->menu_data->setFont(iconFont); //设置字体
     ui->menu_data->installEventFilter(this);
@@ -130,8 +134,8 @@ bool MainWindow::eventFilter(QObject *obj,QEvent *event)
         }
     }
     if(obj == ui->menu_dev) {
-        QString str1=_icon_dev;
-        QString str2="设备\n控制";
+        QString str1=_icon_poll;
+        QString str2="实时\n变化";
         if(event->type() == QEvent::HoverEnter) {
             ui->menu_dev->setText(str2);
             return true;
@@ -220,4 +224,8 @@ void MainWindow::loginSuccess(){
     isSuper=d_login->isSuper;
     username=d_login->username;
     updateUserStatus();
+}
+void MainWindow::sendMsg(){
+    p_dev->env_info=p_env->env_info;
+    p_dev->env_info2=p_env->env_info2;
 }

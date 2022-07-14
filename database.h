@@ -25,7 +25,7 @@ public:
     bool insertData(QStringList info,int n);//插入数据
     bool removeDay(QString date,int n);//删除某一天全部数据
     QVector<QVector<QString>> readData(QString date,int n);
-    QVector<QVector<QString>> readData10(QString date,int n);
+    QVector<QVector<QString>> readData6(QString date,int n);
 
 private:
 

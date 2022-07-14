@@ -40,9 +40,9 @@ public:
 
     void savedata();//保存数据
 
-    void updateChart();
-    void createChart(int i,QChart **chart);//创建图表
     bool isLogin=false;
+    QStringList env_info;
+    QStringList env_info2;
 public slots:
     void getWeatherInfo(QNetworkReply*);//获取天气信息
     void glitter();
@@ -54,15 +54,10 @@ private:
     QNetworkReply *m_Reply;//天气相关
     QMap<QString,QString>* weathermap;//天气信息
     QSerialPort* currentport=nullptr;
-    QStringList env_info;
-    QStringList env_info2;
     bool light=false;
     bool motor=false;
     QTimer* gli;
     QTimer* gli2;
-//    QVector<QVector<float>>data;//环境数据
-//    QVector<QString>time;//时间
-//    int length=6;//图表显示数据个数
 };
 
 #endif // PAGE_ENV_H

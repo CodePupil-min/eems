@@ -4,7 +4,9 @@
 #include <QWidget>
 #include <QtSerialPort/QSerialPort>
 #include <QtSerialPort/QSerialPortInfo>
+#include <QtCharts>
 #include "tool.h"
+#include "database.h"
 
 namespace Ui {
 class page_dev;
@@ -17,15 +19,26 @@ class page_dev : public QWidget
 public:
     explicit page_dev(QWidget *parent = nullptr);
     ~page_dev();
-    void setTitle(bool isLogin=false);
-     //串口通信相关
-    void setCurrentPort(QSerialPort** port);//设置已实例化的串口类
-    void sendPortMsg();
+
+    void initChart();
+    void updateChart();
+    void getData();//从数据库中取6条数据更新
+    void updateData();//实时更新
     bool isLogin=false;
+    QStringList env_info;
+    QStringList env_info2;
 private:
     Ui::page_dev *ui;
     QFont iconFont;
-    QSerialPort* currentport=nullptr;
+    database *db;
+    QVector<QVector<float>>datas;
+    QVector<QString>time;
+    QVector<QString>time2;
+    QChart *chart[8];
+    QLineSeries *series[8];
+    QValueAxis *axisY[8];
+    QBarCategoryAxis *axisX[8];
+    QChartView* views[8];
 };
 
 #endif // PAGE_DEV_H

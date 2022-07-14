@@ -17,9 +17,10 @@ page_data::page_data(QWidget *parent) :
     //刷新数据
     QTimer *timer = new QTimer(this);
     connect(timer,&QTimer::timeout,this,&page_data::updateRecord);
-    timer->start(savetime);//十秒一次
+    timer->start(savetime);
     ui->save->setText("*保存间隔："+QString::number(savetime/1000)+"s");
     connect(ui->inquire,&QPushButton::clicked,this,&page_data::updateRecord);
+    connect(ui->app,&QComboBox::currentTextChanged,this,&page_data::updateRecord);
     connect(ui->remove,&QPushButton::clicked,this,&page_data::removeRecord);
 
 }

@@ -131,12 +131,12 @@ QVector<QVector<QString>> database::readData(QString date,int n){
     DB_users.close();
     return vector;
 }
-QVector<QVector<QString>> database::readData10(QString date,int n){
+QVector<QVector<QString>> database::readData6(QString date,int n){
     QVector<QVector<QString>>vector;
     DB_users.open();
     QSqlQuery sql(DB_users);
-    QString sqlstr="SELECT * FROM (select * from envdatas where date='"+date+"' order by time desc limit 10) aa ORDER BY time";
-    if(n==2)sqlstr="SELECT * FROM (select * from envdatas2 where date='"+date+"' order by time desc limit 10) aa ORDER BY time";
+    QString sqlstr="SELECT * FROM (select * from envdatas where date='"+date+"' order by time desc limit 6) aa ORDER BY time";
+    if(n==2)sqlstr="SELECT * FROM (select * from envdatas2 where date='"+date+"' order by time desc limit 6) aa ORDER BY time";
 //    qDebug()<<sqlstr;
     sql.exec(sqlstr);
     while(sql.next()){
