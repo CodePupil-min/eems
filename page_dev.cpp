@@ -13,7 +13,7 @@ page_dev::page_dev(QWidget *parent) :
 
     db=new database();
     //初始化环境信息
-    QString nodes="00,00,0,00,00,0,00";//温度，湿度，照度，粉尘浓度，大气压强，序号，设备状态
+    QString nodes="0,0,0,0,0,0,00";//温度，湿度，照度，粉尘浓度，大气压强，序号，设备状态
     env_info=nodes.split(",");
     env_info2=nodes.split(",");
 
@@ -32,8 +32,9 @@ page_dev::page_dev(QWidget *parent) :
     }
     QTimer *timer = new QTimer(this);
     connect(timer,&QTimer::timeout,this,&page_dev::updateChart);
-    timer->start(1000);
-    connect(ui->app,&QComboBox::currentTextChanged,this,&page_dev::updateChart);
+    timer->start(freshtime);
+    connect(ui->app,&QComboBox::currentTextChanged,this,&page_dev::chooseUnit);
+    chooseUnit();
 }
 
 page_dev::~page_dev()
@@ -42,8 +43,8 @@ page_dev::~page_dev()
 }
 
 void page_dev::initChart(){
-    float min[]={0,20,0,98};
-    float max[]={45,80,20,104};//范围
+    float min[]={15,20,5000,99};
+    float max[]={45,90,7000,103};//范围
     for(int i=0;i<8;i++){
         chart[i]=new QChart();
         axisX[i]=new QBarCategoryAxis();
@@ -82,10 +83,7 @@ void page_dev::getData(){
         datas[i][7]=d2[i][6].toFloat();//atm
     }
 }
-void page_dev::updateChart(){
-    if(!isLogin)return;
-    QString color[]={"blue","red","green","purple"};
-    updateData();
+void page_dev::chooseUnit(){
     int n=ui->app->currentText().toInt();
     if(n==1){
         for(int i=0;i<4;i++){
@@ -100,27 +98,57 @@ void page_dev::updateChart(){
         }
         ui->app_n->setText("环境表2");
     }
+}
+void page_dev::updateChart(){
+    if(!isLogin)return;
+    QString color[]={"blue","red","green","purple"};
+    updateData();
     //曲线绘制
-    for(int i=0;i<8;i++){
-        views[i]->chart()->removeAllSeries();
-        series[i]=new QLineSeries();
-        for(int j=0;j<6;j++){
-           series[i]->append(j,datas[j][i]);
-        }
-        series[i]->setPointsVisible(true);
-        series[i]->setColor(color[i%4]);
-        series[i]->setPointLabelsFormat("@yPoint");
-        //更新坐标轴
-        QStringList categories;
-        for(int j=0;j<6;j++)
-            categories.append(i<4?time[j].right(5):time2[j].right(5));
-        axisX[i]->setCategories(categories);
+    if(QString::compare(env_info[5],"0")){//1号有效
+        for(int i=0;i<4;i++){
+            views[i]->chart()->removeAllSeries();
+            series[i]=new QLineSeries();
+            for(int j=0;j<6;j++){
+               series[i]->append(j,datas[j][i]);
+            }
+            series[i]->setPointsVisible(true);
+            series[i]->setColor(color[i%4]);
+            series[i]->setPointLabelsFormat("@yPoint");
+            //更新坐标轴
+            QStringList categories;
+            for(int j=0;j<6;j++)
+                categories.append(i<4?time[j].right(5):time2[j].right(5));
+            axisX[i]->setCategories(categories);
 
-        views[i]->chart()->addSeries(series[i]);
-        //线与坐标轴对应起来
-        series[i]->attachAxis(axisX[i]);
-        series[i]->attachAxis(axisY[i]);
+            views[i]->chart()->addSeries(series[i]);
+            //线与坐标轴对应起来
+            series[i]->attachAxis(axisX[i]);
+            series[i]->attachAxis(axisY[i]);
+        }
     }
+    if(QString::compare(env_info2[5],"0")){//2号有效
+        for(int i=4;i<8;i++){
+            views[i]->chart()->removeAllSeries();
+            series[i]=new QLineSeries();
+            for(int j=0;j<6;j++){
+               series[i]->append(j,datas[j][i]);
+            }
+            series[i]->setPointsVisible(true);
+            series[i]->setColor(color[i%4]);
+            series[i]->setPointLabelsFormat("@yPoint");
+            //更新坐标轴
+            QStringList categories;
+            for(int j=0;j<6;j++)
+                categories.append(i<4?time[j].right(5):time2[j].right(5));
+            axisX[i]->setCategories(categories);
+
+            views[i]->chart()->addSeries(series[i]);
+            //线与坐标轴对应起来
+            series[i]->attachAxis(axisX[i]);
+            series[i]->attachAxis(axisY[i]);
+        }
+    }
+
 }
 
 void page_dev::updateData(){

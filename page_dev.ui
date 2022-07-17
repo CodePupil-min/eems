@@ -329,7 +329,7 @@ QChartView{
             </font>
            </property>
            <property name="text">
-            <string>粉尘浓度(mg/m³)</string>
+            <string>粉尘浓度(pcs/283ml)</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>

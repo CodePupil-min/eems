@@ -24,6 +24,7 @@ public:
     void updateChart();
     void getData();//从数据库中取6条数据更新
     void updateData();//实时更新
+    void chooseUnit();//选择显示的表
     bool isLogin=false;
     QStringList env_info;
     QStringList env_info2;

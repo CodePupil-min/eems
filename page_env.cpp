@@ -35,11 +35,15 @@ page_env::page_env(QWidget *parent) :
     ui->light->setText(_icon_light);
     ui->motor->setFont(iconFont);
     ui->motor->setText(_icon_fan);
+    ui->light_2->setFont(iconFont);
+    ui->light_2->setText(_icon_light);
+    ui->motor_2->setFont(iconFont);
+    ui->motor_2->setText(_icon_fan);
 
     weathermap=new QMap<QString,QString>();
     db=new database();
     //初始化环境信息
-    QString nodes="00,00,0,00,00,0,00";//温度，湿度，照度，粉尘浓度，大气压强，序号，设备状态
+    QString nodes="0,0,0,0,0,0,00";//温度，湿度，照度，粉尘浓度，大气压强，序号，设备状态
     env_info=nodes.split(",");
     env_info2=nodes.split(",");
     //更新系统时间
@@ -56,6 +60,9 @@ page_env::page_env(QWidget *parent) :
     QTimer *timer2 = new QTimer(this);
     connect(timer2,&QTimer::timeout,this,&page_env::savedata);
     timer2->start(savetime);//十秒一次（暂定）
+    //超时时间
+    timelimit = new QTimer(this);
+    connect(timelimit,&QTimer::timeout,this,&page_env::lossLongTime);
     //报警灯
     gli=new QTimer(this);
     connect(gli,&QTimer::timeout,this,&page_env::glitter);
@@ -63,16 +70,18 @@ page_env::page_env(QWidget *parent) :
     gli2=new QTimer(this);
     connect(gli2,&QTimer::timeout,this,&page_env::glitter2);
     //设备控制按钮
-    QGraphicsDropShadowEffect *shadow=new QGraphicsDropShadowEffect(this);
-    QGraphicsDropShadowEffect *shadow1=new QGraphicsDropShadowEffect(this);
-    shadow->setOffset(0,0);
-    shadow->setBlurRadius(30);
-    shadow1->setOffset(0,0);
-    shadow1->setBlurRadius(30);
-    ui->motor->setGraphicsEffect(shadow);
-    ui->light->setGraphicsEffect(shadow1);
+    QPushButton* btn[]={ui->motor,ui->motor_2,ui->light,ui->light_2};
+    for(int i=0;i<4;i++){
+        QGraphicsDropShadowEffect *shadow=new QGraphicsDropShadowEffect(this);
+        shadow->setOffset(0,0);
+        shadow->setColor("#c7c7c7");
+        shadow->setBlurRadius(30);
+        btn[i]->setGraphicsEffect(shadow);
+    }
     connect(ui->light,&QPushButton::clicked,this,&page_env::controlDev);
     connect(ui->motor,&QPushButton::clicked,this,&page_env::controlDev);
+    connect(ui->light_2,&QPushButton::clicked,this,&page_env::controlDev2);
+    connect(ui->motor_2,&QPushButton::clicked,this,&page_env::controlDev2);
 }
 
 page_env::~page_env()
@@ -181,18 +190,38 @@ void page_env::setCurrentPort(QSerialPort** port){
 
 void page_env::updateSerPortInfo(){//包括设备状态
     if(currentport==nullptr)return;
-    QString s = currentport->readAll().replace("\r\n","");
+    QString s = currentport->readAll();
+    portinfo+=s;
+    if(s.back()!='\n')return;
+    timelimit->stop();
+    timelimit->start(losstime);//30s超时
+    s=portinfo.replace("\r\n","");
+    portinfo="";
     QStringList info=s.split(",");
     //温度，湿度，照度，粉尘浓度，大气压强，序号，设备状态
     if(info.length()<node_num+2)return;//数据无效
+    ui->hint->hide();
     int n=info[5].toInt();
     if(!(n==1||n==2))return;
     n==1?env_info=info:env_info2=info;
     setMonitorUnit();//更新数据
     int devc_ml=info[info.length()-1].toInt();
     if(devc_ml!=0&&devc_ml!=1&&devc_ml!=10&&devc_ml!=11)return;
-    motor=devc_ml/10;light=devc_ml%10;
+    if(n==1){
+        motor=devc_ml/10;light=devc_ml%10;
+    }
+    else{
+        motor_2=devc_ml/10;light_2=devc_ml%10;
+    }
     setDeviceUnit();//按钮状态
+}
+void page_env::lossLongTime(){
+    timelimit->stop();
+    QString nodes="0,0,0,0,0,0,00";//温度，湿度，照度，粉尘浓度，大气压强，序号，设备状态
+    env_info=nodes.split(",");
+    env_info2=nodes.split(",");
+    setMonitorUnit();
+    ui->hint->show();
 }
 void page_env::glitter(){
     QString on="background-color:red";
@@ -209,15 +238,13 @@ void page_env::glitter2(){
 void page_env::setMonitorUnit(){
     QLabel* labels[]={ui->s_tem,ui->s_hum,ui->s_zd,ui->s_fc,ui->s_atm};
     QLabel* labels2[]={ui->s_tem_2,ui->s_hum_2,ui->s_zd_2,ui->s_fc_2,ui->s_atm_2};
-    QString dws[]={" ℃"," %RH",""," mg/m³"," Kpa"};
+    QString dws[]={" ℃"," %RH",""," pcs/283ml"," Kpa"};
     QString zd[]={"暗","较暗","适宜","较亮","亮"};
     //温度临界值
-    if(env_info[0].toFloat()<20)ui->s_tem->setStyleSheet("color:blue;");
-    else if(env_info[0].toFloat()>35) ui->s_tem->setStyleSheet("color:red;");
+    if(env_info[0].toFloat()>35) ui->s_tem->setStyleSheet("color:red;");
     else ui->s_tem->setStyleSheet("color:green;");
     //2
-    if(env_info2[0].toFloat()<20)ui->s_tem_2->setStyleSheet("color:blue;");
-    else if(env_info2[0].toFloat()>35) ui->s_tem_2->setStyleSheet("color:red;");
+    if(env_info2[0].toFloat()>35) ui->s_tem_2->setStyleSheet("color:red;");
     else ui->s_tem_2->setStyleSheet("color:green;");
     //湿度
     if(env_info[1].toFloat()>=45&&env_info[1].toFloat()<=65)ui->s_hum->setStyleSheet("color:green");
@@ -226,16 +253,18 @@ void page_env::setMonitorUnit(){
     if(env_info2[1].toFloat()>=45&&env_info2[1].toFloat()<=65)ui->s_hum_2->setStyleSheet("color:green");
     else ui->s_hum_2->setStyleSheet("color:white");
     //粉尘报警
-    if(env_info[3].toFloat()>10){if(!gli->isActive())gli->start(500);}
+    if(env_info[3].toFloat()>6000){if(!gli->isActive())gli->start(500);ui->s_fc->setStyleSheet("color:red;");}
     else{
         gli->stop();
         ui->alarm->setStyleSheet("background-color:#c7c7c7");
+        ui->s_fc->setStyleSheet("color:white;");
     }
     //2
-    if(env_info2[3].toFloat()>10){if(!gli2->isActive())gli2->start(500);}
+    if(env_info2[3].toFloat()>6000){if(!gli2->isActive())gli2->start(500);ui->s_fc_2->setStyleSheet("color:red;");}
     else{
         gli2->stop();
         ui->alarm_2->setStyleSheet("background-color:#c7c7c7");
+        ui->s_fc_2->setStyleSheet("color:white;");
     }
     //填写数据
     for(int i=0;i<node_num;i++){
@@ -253,7 +282,6 @@ void page_env::setMonitorUnit(){
     else ui->s_zd_2->setText("未知");
     if(z2==3)ui->s_zd_2->setStyleSheet("color:green");
     else ui->s_zd_2->setStyleSheet("color:white");
-
 }
 
 void page_env::setDeviceUnit(){
@@ -261,9 +289,13 @@ void page_env::setDeviceUnit(){
     QString disable="background-color:#c7c7c7;color:white;border:2px solid #c7c7c7;";
     ui->light->setEnabled(isLogin);
     ui->motor->setEnabled(isLogin);
+    ui->light_2->setEnabled(isLogin);
+    ui->motor_2->setEnabled(isLogin);
     if(!isLogin){
         ui->light->setStyleSheet(disable);
         ui->motor->setStyleSheet(disable);
+        ui->light_2->setStyleSheet(disable);
+        ui->motor_2->setStyleSheet(disable);
         return;
     }
     QString off="background-color:white;color:#7EABFF;border:2px solid #7EABFF;";
@@ -272,19 +304,29 @@ void page_env::setDeviceUnit(){
     else ui->light->setStyleSheet(off);
     if(motor)ui->motor->setStyleSheet(on);
     else ui->motor->setStyleSheet(off);
+    if(light_2)ui->light_2->setStyleSheet(on);
+    else ui->light_2->setStyleSheet(off);
+    if(motor_2)ui->motor_2->setStyleSheet(on);
+    else ui->motor_2->setStyleSheet(off);
 }
 void page_env::controlDev(){
     QString btnname=QObject::sender()->objectName();
     QString::compare(btnname,ui->light->objectName())?motor=!motor:light=!light;
-    QString s=QString::number(motor)+QString::number(light);
+    QString s="1"+QString::number(motor)+QString::number(light);
     setDeviceUnit();//改变按钮状态
     currentport->write(s.toLocal8Bit());
 }
-
+void page_env::controlDev2(){
+    QString btnname=QObject::sender()->objectName();
+    QString::compare(btnname,ui->light_2->objectName())?motor_2=!motor_2:light_2=!light_2;
+    QString s="2"+QString::number(motor_2)+QString::number(light_2);
+    setDeviceUnit();//改变按钮状态
+    currentport->write(s.toLocal8Bit());
+}
 void page_env::savedata(){
     if(!isLogin)return;//未登录
-    if(QString::compare(env_info[0],"00"))
+    if(QString::compare(env_info[5],"0"))
         db->insertData(env_info,1);//登录状态下存储数据
-    if(QString::compare(env_info2[0],"00"))
+    if(QString::compare(env_info2[5],"0"))
         db->insertData(env_info2,2);//登录状态下存储数据
 }

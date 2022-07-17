@@ -84,6 +84,25 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QLabel" name="hint">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color:red;</string>
+        </property>
+        <property name="text">
+         <string>*无数据，请检查连接</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -110,27 +129,39 @@ background-color: white;
 }
 #device&gt;QPushButton{
 border-radius:50px;
-font:bold 70pt;
+font:bold 40pt;
 }</string>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <property name="spacing">
-          <number>20</number>
-         </property>
+        <layout class="QGridLayout" name="gridLayout_15">
          <property name="leftMargin">
-          <number>15</number>
-         </property>
-         <property name="topMargin">
           <number>15</number>
          </property>
          <property name="rightMargin">
           <number>15</number>
          </property>
-         <property name="bottomMargin">
+         <property name="spacing">
           <number>15</number>
          </property>
-         <item>
+         <item row="1" column="0">
           <widget class="QPushButton" name="motor">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color:white;
+color:rgb(126, 171, 255);
+border:2px solid #7EABFF;</string>
+           </property>
+           <property name="text">
+            <string>扇</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QPushButton" name="light_2">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -147,7 +178,7 @@ border:2px solid #7EABFF;</string>
            </property>
           </widget>
          </item>
-         <item>
+         <item row="3" column="0">
           <widget class="QPushButton" name="light">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -161,7 +192,51 @@ color:rgb(126, 171, 255);
 border:2px solid #7EABFF;</string>
            </property>
            <property name="text">
+            <string>灯</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QPushButton" name="motor_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color:white;
+color:rgb(126, 171, 255);
+border:2px solid #7EABFF;</string>
+           </property>
+           <property name="text">
             <string>扇</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>环境表-1</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="label_14">
+           <property name="text">
+            <string>环境表-2</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
            </property>
           </widget>
          </item>
@@ -825,7 +900,7 @@ background-color:white;</string>
        <widget class="QWidget" name="widget_3" native="true">
         <property name="styleSheet">
          <string notr="true">#s_fc{
-font:14pt &quot;微软雅黑&quot;;
+font:10pt &quot;微软雅黑&quot;;
 }
 </string>
         </property>
@@ -890,15 +965,24 @@ color:white;</string>
           <widget class="QLabel" name="s_fc">
            <property name="maximumSize">
             <size>
-             <width>120</width>
+             <width>150</width>
              <height>16777215</height>
             </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>微软雅黑</family>
+             <pointsize>10</pointsize>
+             <weight>50</weight>
+             <italic>false</italic>
+             <bold>false</bold>
+            </font>
            </property>
            <property name="styleSheet">
             <string notr="true">color:white;</string>
            </property>
            <property name="text">
-            <string>-- mg/m³</string>
+            <string>-- pcs/283ml</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -1342,7 +1426,7 @@ color:white;</string>
        <widget class="QWidget" name="widget_8" native="true">
         <property name="styleSheet">
          <string notr="true">#s_fc_2{
-font:14pt &quot;微软雅黑&quot;;
+font:10pt &quot;微软雅黑&quot;;
 }
 </string>
         </property>
@@ -1407,7 +1491,7 @@ color:white;</string>
           <widget class="QLabel" name="s_fc_2">
            <property name="maximumSize">
             <size>
-             <width>120</width>
+             <width>150</width>
              <height>16777215</height>
             </size>
            </property>
@@ -1415,7 +1499,7 @@ color:white;</string>
             <string notr="true">color:white;</string>
            </property>
            <property name="text">
-            <string>-- mg/m³</string>
+            <string>-- pcs/283ml</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>

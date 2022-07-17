@@ -30,7 +30,7 @@ void page_net::setSerialPortUnit(){
     //设置默认连接参数
     ui->port_data->setCurrentText("8");
     ui->port_stop->setCurrentText("1");
-    ui->port_baud->setCurrentText("115200");
+    ui->port_baud->setCurrentText("57600");
     ui->port_parity->setCurrentText("无校验");
     //选中并打开串口
     openPort();

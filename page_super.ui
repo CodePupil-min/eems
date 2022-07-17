@@ -53,7 +53,9 @@ background:#155CA6
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true"/>
+      <string notr="true">QLineEdit{
+border:none;
+}</string>
      </property>
      <property name="inputMethodHints">
       <set>Qt::ImhNone</set>
@@ -75,7 +77,7 @@ background:#155CA6
          </sizepolicy>
         </property>
         <property name="styleSheet">
-         <string notr="true">border:none;</string>
+         <string notr="true"/>
         </property>
        </widget>
       </item>
@@ -98,7 +100,7 @@ background:#155CA6
          </sizepolicy>
         </property>
         <property name="styleSheet">
-         <string notr="true">border:none;</string>
+         <string notr="true"/>
         </property>
         <property name="echoMode">
          <enum>QLineEdit::Password</enum>
@@ -121,7 +123,7 @@ background:#155CA6
          </sizepolicy>
         </property>
         <property name="styleSheet">
-         <string notr="true">border:none;</string>
+         <string notr="true"/>
         </property>
         <property name="echoMode">
          <enum>QLineEdit::Password</enum>

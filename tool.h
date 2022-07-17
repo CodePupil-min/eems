@@ -46,7 +46,9 @@
 #define _icon_fan QChar(0xf863)//fan
 
 #define node_num 5//节点数
-#define savetime 10000
+#define savetime 10000//数据保存间隔
+#define losstime 20000//超时时间
+#define freshtime 2000//图表刷新时间
 
 class Tool
 {

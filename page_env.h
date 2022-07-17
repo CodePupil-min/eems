@@ -37,7 +37,7 @@ public:
 
     void setDeviceUnit();//更新设备状态
     void controlDev();//控制设备信号
-
+    void controlDev2();//控制设备信号
     void savedata();//保存数据
 
     bool isLogin=false;
@@ -47,6 +47,7 @@ public slots:
     void getWeatherInfo(QNetworkReply*);//获取天气信息
     void glitter();
     void glitter2();
+    void lossLongTime();//超时所有数据均变为0
 private:
     Ui::page_env *ui;
     QFont iconFont;
@@ -54,10 +55,14 @@ private:
     QNetworkReply *m_Reply;//天气相关
     QMap<QString,QString>* weathermap;//天气信息
     QSerialPort* currentport=nullptr;
-    bool light=false;
-    bool motor=false;
+    QString portinfo="";
+    bool light=0;
+    bool motor=0;
+    bool light_2=0;
+    bool motor_2=0;
     QTimer* gli;
     QTimer* gli2;
+    QTimer* timelimit;
 };
 
 #endif // PAGE_ENV_H

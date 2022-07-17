@@ -44,7 +44,7 @@ void page_data::updateRecord(){
     content->setHeaderData(3,Qt::Horizontal,QStringLiteral("温度(℃)"));   //设置表头内容
     content->setHeaderData(4,Qt::Horizontal,QStringLiteral("湿度(%PH)"));   //设置表头内容
     content->setHeaderData(5,Qt::Horizontal,QStringLiteral("光照等级"));   //设置表头内容
-    content->setHeaderData(6,Qt::Horizontal,QStringLiteral("粉尘浓度(mg/m³)"));   //设置表头内容
+    content->setHeaderData(6,Qt::Horizontal,QStringLiteral("粉尘浓度(pcs/283ml)"));   //设置表头内容
     content->setHeaderData(7,Qt::Horizontal,QStringLiteral("大气压强(pa)"));   //设置表头内容
     ui->datatable->setModel(content);    //挂载表格模型
     ui->datatable->horizontalHeader()->setDefaultAlignment(Qt::AlignCenter);        //表头信息显示居中
