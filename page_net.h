@@ -25,10 +25,15 @@ public:
     void openPort();//选择当前串口并通信
     void setSerialPortUnit();
 
+    void autoTem_1();
+    void autozd_1();
+    void autoTem_2();
+    void autozd_2();
 private:
     Ui::page_net *ui;
     QFont iconFont;
     QSerialPort* currentport=nullptr;
+    bool dev_auto[4];//tem1,zd1,tem2,zd2
 };
 
 #endif // PAGE_NET_H

@@ -1,4 +1,8 @@
 # 嵌入式环境监测系统上位机软件
+## V1.4.4
+1. 修改设备控制方式，新增自动控制。
+2. 修复一些bug。  
+[2022/7/19](./other/overview_v1.4.4.png)
 ## V1.3.4
 1. 初步建立与单片机的连接。
 2. 更改串口数据处理方式，保证数据可靠。
@@ -28,7 +32,6 @@
 2. 更改配色（感觉还是蓝色稍微好看一点）
 3. 开始有记录的第一个版本。  
 [2022/5/18](./other/overview_v1.0.0.png)
-# 
 ## 参考资源
 + 矢量图标 [Font Awesome](https://fa5.dashgame.com/#/)
 + 天气api [JSON在线工具](https://www.sojson.com/api/weather.html)

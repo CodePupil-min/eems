@@ -157,7 +157,7 @@ bool MainWindow::eventFilter(QObject *obj,QEvent *event)
     }
     if(obj == ui->menu_net) {
         QString str1=_icon_net;
-        QString str2="网络\n连接";
+        QString str2="设置";
         if(event->type() == QEvent::HoverEnter) {
             ui->menu_net->setText(str2);
             return true;

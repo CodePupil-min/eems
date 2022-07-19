@@ -45,10 +45,13 @@
 #define _icon_light QChar(0xf0eb)//light
 #define _icon_fan QChar(0xf863)//fan
 
+#define _icon_s_off QChar(0xf204)
+#define _icon_s_on QChar(0xf205)
+
 #define node_num 5//节点数
-#define savetime 10000//数据保存间隔
-#define losstime 20000//超时时间
-#define freshtime 2000//图表刷新时间
+#define savetime 30000//数据保存间隔
+#define losstime 60000//超时时间
+#define freshtime 5000//图表刷新时间
 
 class Tool
 {

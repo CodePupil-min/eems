@@ -12,6 +12,26 @@ page_net::page_net(QWidget *parent) :
     ui->logo->setText(_icon_net);
     ui->refresh->setFont(iconFont);
     ui->refresh->setText(_icon_refresh);
+    ui->tem_1->setFont(iconFont);
+    ui->tem_1->setText(_icon_s_off);
+    ui->zd_1->setFont(iconFont);
+    ui->zd_1->setText(_icon_s_off);
+    ui->tem_2->setFont(iconFont);
+    ui->tem_2->setText(_icon_s_off);
+    ui->zd_2->setFont(iconFont);
+    ui->zd_2->setText(_icon_s_off);
+
+    for(int i=0;i<4;i++)dev_auto[i]=0;
+    ui->spin_1->setSuffix(" ℃");
+    ui->spin_1->setMinimum(26);
+    ui->spin_1->setMaximum(35);
+    ui->spin_2->setSuffix(" ℃");
+    ui->spin_2->setMinimum(26);
+    ui->spin_2->setMaximum(35);
+    connect(ui->tem_1,&QPushButton::clicked,this,&page_net::autoTem_1);
+    connect(ui->tem_2,&QPushButton::clicked,this,&page_net::autoTem_2);
+    connect(ui->zd_1,&QPushButton::clicked,this,&page_net::autozd_1);
+    connect(ui->zd_2,&QPushButton::clicked,this,&page_net::autozd_2);
 }
 
 page_net::~page_net()
@@ -81,3 +101,40 @@ void page_net::openPort(){
     ui->current_port->setText(currentport->portName()+" ["+baud+"-"+ui->port_data->currentText()+"-"+stop+"-"+parity+"]");
 }
 
+void page_net::autoTem_1(){
+    bool s=dev_auto[0]=!dev_auto[0];
+    ui->tem_1->setText(s?_icon_s_on:_icon_s_off);
+    //关闭
+    if(!s){
+        currentport->write("k");
+        return;
+    }
+    int tem=ui->spin_1->value();
+    QString t=QChar(tem-26+'a');
+    currentport->write(t.toLocal8Bit());
+}
+void page_net::autozd_1(){
+    bool s=dev_auto[1]=!dev_auto[1];
+    ui->zd_1->setText(s?_icon_s_on:_icon_s_off);
+    if(s)currentport->write("y");
+    else currentport->write("z");
+}
+
+void page_net::autoTem_2(){
+    bool s=dev_auto[2]=!dev_auto[2];
+    ui->tem_2->setText(s?_icon_s_on:_icon_s_off);
+    //关闭
+    if(!s){
+        currentport->write("K");
+        return;
+    }
+    int tem=ui->spin_2->value();
+    QString t=QChar(tem-26+'A');
+    currentport->write(t.toLocal8Bit());
+}
+void page_net::autozd_2(){
+    bool s=dev_auto[3]=!dev_auto[3];
+    ui->zd_2->setText(s?_icon_s_on:_icon_s_off);
+    if(s)currentport->write("Y");
+    else currentport->write("Z");
+}

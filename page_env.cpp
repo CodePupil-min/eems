@@ -312,14 +312,14 @@ void page_env::setDeviceUnit(){
 void page_env::controlDev(){
     QString btnname=QObject::sender()->objectName();
     QString::compare(btnname,ui->light->objectName())?motor=!motor:light=!light;
-    QString s="1"+QString::number(motor)+QString::number(light);
+    QString s=QString::number(motor*2+light);
     setDeviceUnit();//改变按钮状态
     currentport->write(s.toLocal8Bit());
 }
 void page_env::controlDev2(){
     QString btnname=QObject::sender()->objectName();
     QString::compare(btnname,ui->light_2->objectName())?motor_2=!motor_2:light_2=!light_2;
-    QString s="2"+QString::number(motor_2)+QString::number(light_2);
+    QString s=QString::number(4+motor_2*2+light_2);
     setDeviceUnit();//改变按钮状态
     currentport->write(s.toLocal8Bit());
 }
