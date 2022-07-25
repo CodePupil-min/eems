@@ -199,7 +199,9 @@ void MainWindow::updateUserStatus(){
     p_env->isLogin=isLogin;//更新env页登录状态
     p_dev->isLogin=isLogin;
     p_data->isLogin=isLogin;
+    p_net->isLogin=isLogin;
     disconnect(ui->user,&QPushButton::clicked,0,0);
+    p_net->setBtn();
     if(!isLogin){//未登录不能控制设备
         connect(ui->user,&QPushButton::clicked,this,&MainWindow::login);
         disconnect(ui->menu_dev,&QPushButton::clicked,0,0);

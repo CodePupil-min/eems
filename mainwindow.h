@@ -24,8 +24,8 @@ public:
     ~MainWindow();
     //各个次级页面选择
     void chooseEnvP();//环境监测页
-    void chooseDevP();//设备控制页，仅登录用户可用
-    void chooseDataP();//数据管理页
+    void chooseDevP();//数据分析页，仅登录用户可用
+    void chooseDataP();//数据管理页，仅登录用户可用
     void chooseNetP();//网络连接页
     void manageUsers();//用户管理页，仅管理员可用
     void changeMenuBtn(QPushButton** btn);//切换按钮样式

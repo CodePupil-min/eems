@@ -28,10 +28,6 @@ page_net::page_net(QWidget *parent) :
     ui->spin_2->setSuffix(" ℃");
     ui->spin_2->setMinimum(26);
     ui->spin_2->setMaximum(35);
-    connect(ui->tem_1,&QPushButton::clicked,this,&page_net::autoTem_1);
-    connect(ui->tem_2,&QPushButton::clicked,this,&page_net::autoTem_2);
-    connect(ui->zd_1,&QPushButton::clicked,this,&page_net::autozd_1);
-    connect(ui->zd_2,&QPushButton::clicked,this,&page_net::autozd_2);
 }
 
 page_net::~page_net()
@@ -137,4 +133,21 @@ void page_net::autozd_2(){
     ui->zd_2->setText(s?_icon_s_on:_icon_s_off);
     if(s)currentport->write("Y");
     else currentport->write("Z");
+}
+void page_net::setBtn(){
+    QPushButton* btn[]={ui->tem_1,ui->tem_2,ui->zd_1,ui->zd_2};
+    if(!isLogin){
+        for(int i=0;i<4;i++){
+            disconnect(btn[i],&QPushButton::clicked,0,0);
+            btn[i]->setStyleSheet("color:#c7c7c7");
+        }
+        return;
+    }
+    for(int i=0;i<4;i++){
+        btn[i]->setStyleSheet("color:#409EFF");
+    }
+    connect(ui->tem_1,&QPushButton::clicked,this,&page_net::autoTem_1);
+    connect(ui->tem_2,&QPushButton::clicked,this,&page_net::autoTem_2);
+    connect(ui->zd_1,&QPushButton::clicked,this,&page_net::autozd_1);
+    connect(ui->zd_2,&QPushButton::clicked,this,&page_net::autozd_2);
 }

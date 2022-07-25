@@ -29,6 +29,9 @@ public:
     void autozd_1();
     void autoTem_2();
     void autozd_2();
+
+    void setBtn();
+    bool isLogin=false;
 private:
     Ui::page_net *ui;
     QFont iconFont;

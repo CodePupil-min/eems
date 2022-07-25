@@ -34,7 +34,7 @@ public:
     void setCurrentPort(QSerialPort** port);//设置已实例化的串口类
     void updateSerPortInfo();//接受数据并更新
     void setMonitorUnit();//更新环境数据
-
+    //监控模块相关
     void setDeviceUnit();//更新设备状态
     void controlDev();//控制设备信号
     void controlDev2();//控制设备信号

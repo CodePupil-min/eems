@@ -50,7 +50,7 @@
 
 #define node_num 5//节点数
 #define savetime 30000//数据保存间隔
-#define losstime 60000//超时时间
+#define losstime 600000//超时时间
 #define freshtime 5000//图表刷新时间
 
 class Tool
